@@ -3,14 +3,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
 import { DateTimeClass } from '@/class/DateTimeClass';
+import { defineComponent } from 'vue';
+
 
 export default defineComponent({
   name: 'Clock',
   setup() {
-      const date: DateTimeClass = new DateTimeClass();
-      const dateTime = date.NowDateTime.date;
+      const dateTimeClass = new DateTimeClass();
+      const dateTime = dateTimeClass.GetTimeHHMMss();
       return {
           dateTime
       }

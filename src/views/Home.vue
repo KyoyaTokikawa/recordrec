@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <WaveButton :name=dateTime />
+	{{ dateTime }}
   </div>
 		<div class="col-12 md:col-6">
 			<div class="card p-fluid">
@@ -57,12 +58,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/WaveButton.vue'; // @ is an alias to /src
+import WaveButton from '@/components/WaveButton.vue'; // @ is an alias to /src
+import { DateTimeClass } from '@/class/DateTimeClass';
 
 export default defineComponent({
   name: 'Home',
   components: {
-    HelloWorld,
+    WaveButton,
   },
+  setup(){
+	const dateTimeClass: DateTimeClass = new DateTimeClass();
+	const dateTime = dateTimeClass.GetTimeHHMM();
+	return {
+		dateTime
+	}
+  }
 });
 </script>

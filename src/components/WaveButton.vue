@@ -2,7 +2,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
 
 <a href="javascript:void(0)">
-  <span>Click</span>
+  <span>{{name}}</span>
   <div class="wave"></div>
 </a>
 </template>
@@ -11,9 +11,9 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'HelloWorld',
+  name: 'WaveButton',
   props: {
-    msg: String,
+    name: String,
   },
 });
 </script>
