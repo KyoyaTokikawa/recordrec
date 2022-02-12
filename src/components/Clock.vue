@@ -6,12 +6,26 @@
 import { DateTimeClass } from '@/class/DateTimeClass';
 import { defineComponent } from 'vue';
 
-
 export default defineComponent({
   name: 'Clock',
-  setup() {
+  props:{
+    KbnDateTime: String
+  },
+  setup(props) {
       const dateTimeClass = new DateTimeClass();
-      const dateTime = dateTimeClass.GetTimeHHMMss();
+      let dateTime;
+      if (props.KbnDateTime == DateTimeClass.hhmmss)
+      {
+        dateTime = dateTimeClass.GetTimeHHMMss();
+      }
+      else if (props.KbnDateTime == DateTimeClass.hhmm)
+      {
+        dateTime = dateTimeClass.GetTimeHHMM ();
+      }
+      else
+      {
+        dateTime = dateTimeClass.GetTimeHHMM ();
+      }
       return {
           dateTime
       }

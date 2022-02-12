@@ -1,7 +1,5 @@
 <template>
-<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-
-<a href="javascript:void(0)">
+<a>
   <span>{{name}}</span>
   <div class="wave"></div>
 </a>
@@ -29,14 +27,13 @@ export default defineComponent({
 
   body {
     min-height: 100vh;
-    background-color: #000;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center
   }
 
   a {
-    width: 100px;
     padding: 10px 20px;
     position: relative;
     display: block;
@@ -45,7 +42,7 @@ export default defineComponent({
     
     &:hover {
       .wave {
-        top: -120px;
+        top: -230px;
       }
     }
 
@@ -53,18 +50,17 @@ export default defineComponent({
       position: relative;
       z-index: 1;
       color: white;
-      font-size: 12px;
       letter-spacing: 8px;
     }
 
     .wave {
-      width: 200px;
-      height: 200px;
+      width: 400px;
+      height: 400px;
       background-color: #444857;
       box-shadow: inset 0 0 50px rgba(0,0,0,.5);
       position: absolute;
       left: 0;
-      top: -80px;
+      top: -100px;
       transition: 0.4s;
 
       &::before, &::after {
@@ -72,32 +68,32 @@ export default defineComponent({
         height: 200%;
         content: '';
         position: absolute;
-        top: 0;
-        left: 25%;
-        transform: translate(-40%,-80%);
+        top: 0%;
+        left: 50%;
+        transform: translate(-200%,-200%);
       }
 
       &::before {
-        border-radius: 45%;
+        border-radius: 40%;
         background-color: rgba(20,20,20,1);
-        animation: wave 5s linear infinite;
+        animation: wave 10s linear infinite;
       }
 
       &::after {
         border-radius: 40%;
         background-color: rgba(20,20,20,0.5);
-        animation: wave 10s linear infinite;
+        animation: wave 15s linear infinite;
       }
     }
   }
 
   @keyframes wave {
     0% {
-      transform: translate(-50%,-75%) rotate(0deg);
+      transform: translate(-50%,-80%) rotate(0deg);
     }
 
     100% {
-      transform: translate(-50%,-75%) rotate(360deg);
+      transform: translate(-50%,-80%) rotate(360deg);
     }
   }
 </style>

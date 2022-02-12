@@ -2,7 +2,6 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
     <WaveButton :name=dateTime />
-	{{ dateTime }}
   </div>
 		<div class="col-12 md:col-6">
 			<div class="card p-fluid">
