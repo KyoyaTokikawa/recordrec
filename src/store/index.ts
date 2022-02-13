@@ -25,7 +25,7 @@ export const store = createStore<State>({
         value: { "": 0 }
     },
     getters: {
-        getValue: (state ) => ( name: string ) => {
+        getValue: (state) => ( name: string ) => {
             return state.value[name] ? state.value[name] : null;
         }
     },

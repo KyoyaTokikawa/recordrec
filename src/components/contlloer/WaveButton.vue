@@ -1,7 +1,7 @@
 <template>
 <a>
-  <span>{{name}}</span>
   <div class="wave"></div>
+  <span style="user-select:none">{{name}}</span>
 </a>
 </template>
 
@@ -30,7 +30,7 @@ export default defineComponent({
     background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
   }
 
   a {

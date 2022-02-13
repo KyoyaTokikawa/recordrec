@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+sqltools*
+server
 
 # local env files
 .env.local

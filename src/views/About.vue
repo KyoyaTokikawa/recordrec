@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Clock from '@/components/Clock.vue'
+import Clock from '@/components/contlloer/Clock.vue'
 
 export default defineComponent({
   name: "aaaa",

@@ -10,8 +10,8 @@ interface DateTimeName {
 export class DateTimeClass {
     public static hhmmss = "hhmmss";
     public static hhmm = "hhmm";
-    
-    Store: Store<State> = useStore();
+
+    Store: Store<State>;
     IntervalHHMMssID: number = setInterval(() => {
         this.Store.dispatch('change', { name: DateTimeClass.hhmmss, value: this.GetHHMMss() } as ClassName);
         this.Store.dispatch('change', { name: DateTimeClass.hhmm, value: this.GetHHMM() } as ClassName);
@@ -37,14 +37,14 @@ export class DateTimeClass {
 
         let HH: string = date.getHours().toString();
         if (HH.length < 2)
-        HH = GetTime(HH);
+        HH = this.GetTime(HH);
 
         let MM: string = date.getMinutes().toString();
-        MM = GetTime(MM);
+        MM = this.GetTime(MM);
 
         let SS: string = date.getSeconds().toString();
         if (SS.length < 2)
-        SS = GetTime(SS);
+        SS = this.GetTime(SS);
         return HH + ':' + MM + ':' + SS;
     }
     GetHHMM(): string{
@@ -52,11 +52,11 @@ export class DateTimeClass {
 
         let HH: string = date.getHours().toString();
         if (HH.length < 2)
-        HH = GetTime(HH);
+        HH = this.GetTime(HH);
 
         let MM: string = date.getMinutes().toString();
         if (MM.length < 2)
-        MM = GetTime(MM);
+        MM = this.GetTime(MM);
 
         return HH + ':' + MM;
     }
@@ -67,14 +67,14 @@ export class DateTimeClass {
     GetTimeHHMM(): ComputedRef {
         return this.NowDateTime.HHMM;
     }
+    GetTime(time: string): string
+    {
+        let value = time
+        if (time.length < 2)
+        {
+            value = '0' + time;
+        }
+        return value;
+    }
 }
 
-function GetTime(time: string): string
-{
-    let value = time
-    if (time.length < 2)
-    {
-        value = '0' + time;
-    }
-    return value;
-}
