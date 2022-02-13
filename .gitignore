@@ -3,6 +3,7 @@ node_modules
 /dist
 sqltools*
 server
+sql
 
 # local env files
 .env.local
