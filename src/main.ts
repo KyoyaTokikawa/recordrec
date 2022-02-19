@@ -7,6 +7,9 @@ import "primevue/resources/primevue.min.css"; // ベース
 import "primeicons/primeicons.css"; // アイコン
 
 import { createApp, reactive } from 'vue';
+import axios from "axios";
+import VueAxios from "vue-axios";
+
 import router from './router';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
@@ -98,6 +101,8 @@ import { DateTimeClass } from '@/class/DateTimeClass';
 
 const app = createApp(App)
 app.config.globalProperties.$appState = reactive({ theme: 'lara-light-indigo', darkTheme: false });
+
+app.use(VueAxios, axios);
 
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);

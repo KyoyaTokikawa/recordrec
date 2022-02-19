@@ -3,7 +3,7 @@
     <div class="card p-fluid">
         <div class="formgrid grid">
             <div class="field col" style="margin-bottom: 0px;">
-                <div style="font-size: 100px; "><Clock @ChangeTime="changeTime"/></div>
+                <div style="font-size: 100px; "><Clock :KbnValueDateTime="value" @ChangeTime="changeTime"/></div>
             </div>
             <div class="field col" style="margin-bottom: 0px;">
                 <div style="width: 400px; font-size: 80px;">
@@ -18,6 +18,7 @@
         </div>
     </div>
 </div>
+
 <AttendanceList :key="id" :datas="data" ref="component"/>
 </template>
 
@@ -25,7 +26,9 @@
 import { defineComponent, ref } from "vue";
 import Clock from '@/components/contlloer/Clock.vue'
 import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
-import AttendanceList from '@/components/Attendance/AttendanceList.vue'
+import AttendanceList from '@/components/Attendance/AttendanceList.vue';
+import { AxiosClass } from '@/class/AxiosClass'
+import { DateTimeClass } from "@/class/DateTimeClass";
 
 interface IFAttendanceTime
 {
@@ -49,6 +52,7 @@ export default defineComponent({
     },
     setup(){
         let Nowtime = '';
+        const value: string = DateTimeClass.DATETIME2
         let data: AttendanceTime = new AttendanceTime();
         let id = ref(0);
         let ID = 0;
@@ -57,6 +61,9 @@ export default defineComponent({
             if (typeof(data_) == 'undefined')
             {
                 data_ = { ID: ++ID, Name: 'toki', Commutingtime: Nowtime, Leavingtime: ''};
+                const jsondata_ = { UserID: 1, Name: 'toki', CommutingTime: Nowtime };
+                const post: AxiosClass = new AxiosClass('/api/sql/RegisterCommutingTime', jsondata_);
+                post.axicsPOST();
                 data.value.push(data_);
                 data.value.reverse()
             }
@@ -83,6 +90,7 @@ export default defineComponent({
         return {
             data,
             id,
+            value,
             changeTime,
             ClickAttendance,
             ClickLeaving

@@ -12,31 +12,49 @@ import { defineComponent, ComputedRef } from 'vue';
 export default defineComponent({
   name: 'Clock',
   props:{
-    KbnDateTime: String
+    KbnDisplayDateTime: String,
+    KbnValueDateTime:String
   },
   emits: ['ChangeTime'],
   setup(props, context) {
-    const dateTimeClass = new DateTimeClass(); 
+    const dateTimeClass = new DateTimeClass();
     let dateTime: ComputedRef;
-    if (props.KbnDateTime == DateTimeClass.hhmmss)
+    if (props.KbnDisplayDateTime == DateTimeClass.hhmmss)
+    {
+      dateTime = dateTimeClass.GetTimeHHMMss();
+    }
+    else if (props.KbnDisplayDateTime == DateTimeClass.hhmm)
+    {
+      dateTime = dateTimeClass.GetTimeHHMM ();
+    }
+    else
+    {
+      dateTime = dateTimeClass.GetTimeHHMMss();
+    }
+    setInterval(() => {
+      if (typeof(props.KbnValueDateTime) != 'undefined')
       {
-        dateTime = dateTimeClass.GetTimeHHMMss();
-      }
-      else if (props.KbnDateTime == DateTimeClass.hhmm)
-      {
-        dateTime = dateTimeClass.GetTimeHHMM ();
+        switch (props.KbnValueDateTime)
+        {
+          case DateTimeClass.DATETIME2:
+            context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
+            break;
+          default:
+            context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
+            break;
+        }
       }
       else
       {
-        dateTime = dateTimeClass.GetTimeHHMMss();
+        context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
       }
-      setInterval(() => {
-        context.emit('ChangeTime', dateTime.value);
-        return null;
-      })
-      return {
-          dateTime,
+      return null;
       }
+    );
+    
+    return {
+      dateTime,
+    }
   }
 });
 </script>
