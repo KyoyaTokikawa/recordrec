@@ -27,9 +27,9 @@ import { defineComponent, ref } from "vue";
 import Clock from '@/components/contlloer/Clock.vue'
 import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import AttendanceList from '@/components/Attendance/AttendanceList.vue';
-import { AxiosClass } from '@/class/AxiosClass'
-import { DateTimeClass } from "@/class/DateTimeClass";
-
+import { AxiosClass } from '@/class/API/AxiosClass'
+import { DateTimeStore } from '@/class/store/DateTimeStore';
+import { UserMasterStore } from '@/class/store/UserMasterStore'
 interface IFAttendanceTime
 {
     ID: number,
@@ -52,8 +52,10 @@ export default defineComponent({
     },
     setup(){
         let Nowtime = '';
-        const value: string = DateTimeClass.DATETIME2
+        const value: string = DateTimeStore.DATETIME2
         let data: AttendanceTime = new AttendanceTime();
+        const UserMaster: UserMasterStore = new UserMasterStore();
+        console.log(UserMaster.ValUserMaster.value)
         let id = ref(0);
         let ID = 0;
         const ClickAttendance = () => {
@@ -63,7 +65,7 @@ export default defineComponent({
                 data_ = { ID: ++ID, Name: 'toki', Commutingtime: Nowtime, Leavingtime: ''};
                 const jsondata_ = { UserID: 1, Name: 'toki', CommutingTime: Nowtime };
                 const post: AxiosClass = new AxiosClass('/api/sql/RegisterCommutingTime', jsondata_);
-                post.axicsPOST();
+                post.POST();
                 data.value.push(data_);
                 data.value.reverse()
             }

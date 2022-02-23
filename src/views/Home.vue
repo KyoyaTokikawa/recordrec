@@ -58,7 +58,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
-import { DateTimeClass } from '@/class/DateTimeClass';
+import { DateTimeStore } from '@/class/store/DateTimeStore';
 
 export default defineComponent({
   name: 'Home',
@@ -66,8 +66,8 @@ export default defineComponent({
     WaveButton,
   },
   setup(){
-	const dateTimeClass: DateTimeClass = new DateTimeClass();
-	const dateTime = dateTimeClass.GetTimeHHMM();
+	const dateTimeClass: DateTimeStore = new DateTimeStore();
+	const dateTime = dateTimeClass.ValHHMM;
 	return {
 		dateTime
 	}

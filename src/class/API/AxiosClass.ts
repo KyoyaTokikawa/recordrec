@@ -11,8 +11,14 @@ export class AxiosClass
         this.API = api;
     }
 
-    axicsPOST(): void
+    POST(): void
     {
         axios.post(process.env.VUE_APP_API_URL + this.API, this.Json);
     }
+
+    GET(): any
+    {
+        return axios.get(process.env.VUE_APP_API_URL + this.API, this.Json);
+    }
+    
 }

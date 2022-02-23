@@ -97,10 +97,9 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 
 import { store, key } from '../src/store/index'
-import { DateTimeClass } from '@/class/DateTimeClass';
-
 const app = createApp(App)
 app.config.globalProperties.$appState = reactive({ theme: 'lara-light-indigo', darkTheme: false });
+
 
 app.use(VueAxios, axios);
 
@@ -110,12 +109,12 @@ app.use(ToastService);
 app.use(router);
 app.use(store, key);
 
+
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
-app.component("DateTimeClass", DateTimeClass);
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete);

@@ -7,6 +7,17 @@
   <router-view/>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import { Init } from "./AppInit";
+export default defineComponent(({
+  setup()
+  {
+    Init()
+  }
+}));
+</script>
+
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

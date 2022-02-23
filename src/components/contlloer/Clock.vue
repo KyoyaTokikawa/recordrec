@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { DateTimeClass } from '@/class/DateTimeClass';
+import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { defineComponent, ComputedRef } from 'vue';
 
 
@@ -17,36 +17,36 @@ export default defineComponent({
   },
   emits: ['ChangeTime'],
   setup(props, context) {
-    const dateTimeClass = new DateTimeClass();
+    const dateTimeClass = new DateTimeStore();
     let dateTime: ComputedRef;
-    if (props.KbnDisplayDateTime == DateTimeClass.hhmmss)
+    if (props.KbnDisplayDateTime == DateTimeStore.hhmmss)
     {
-      dateTime = dateTimeClass.GetTimeHHMMss();
+      dateTime = dateTimeClass.ValHHMMSS;
     }
-    else if (props.KbnDisplayDateTime == DateTimeClass.hhmm)
+    else if (props.KbnDisplayDateTime == DateTimeStore.hhmm)
     {
-      dateTime = dateTimeClass.GetTimeHHMM ();
+      dateTime = dateTimeClass.ValHHMM;
     }
     else
     {
-      dateTime = dateTimeClass.GetTimeHHMMss();
+      dateTime = dateTimeClass.ValHHMMSS;
     }
     setInterval(() => {
       if (typeof(props.KbnValueDateTime) != 'undefined')
       {
         switch (props.KbnValueDateTime)
         {
-          case DateTimeClass.DATETIME2:
-            context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
+          case DateTimeStore.DATETIME2:
+            context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
             break;
           default:
-            context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
+            context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
             break;
         }
       }
       else
       {
-        context.emit('ChangeTime', dateTimeClass.GetValDATETIME2().value);
+        context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
       }
       return null;
       }
