@@ -16,6 +16,11 @@ export class StoreClass
         return (computed(() => this.Store.getters.getValue(label)));
     }
 
+    protected Get(label: string): any
+    {
+        return this.Store.getters.getValue(label);
+    }
+
     protected DispatchChange(value: ClassName): void
     {
         this.Store.dispatch('change', value);

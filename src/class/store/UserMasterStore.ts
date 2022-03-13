@@ -1,4 +1,3 @@
-import { ComputedRef } from 'vue';
 import { ClassName } from '../../store/index'
 import { UserClass } from '../UserClass';
 import { StoreClass } from './StoreClass';
@@ -11,14 +10,14 @@ export class UserMasterStore extends StoreClass
     {
         super()
     }
-    public set SetUserMaster(value: UserClass[])
+    protected set SetUserMaster(value: UserClass[])
     {
         this.DispatchChange({name: UserMasterStore.ClassName, value: value} as ClassName)
     }
 
-    get ValUserMaster(): ComputedRef
+    protected get Vale(): UserClass[]
     {
-        return this.GetComputed(UserMasterStore.ClassName);
+        return this.Get(UserMasterStore.ClassName);
     }
 
 }

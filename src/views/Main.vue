@@ -24,12 +24,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import Clock from '@/components/contlloer/Clock.vue'
-import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import AttendanceList from '@/components/Attendance/AttendanceList.vue';
 import { AxiosClass } from '@/class/API/AxiosClass'
 import { DateTimeStore } from '@/class/store/DateTimeStore';
-import { UserMasterStore } from '@/class/store/UserMasterStore'
+import { UserMasterClass } from "@/class/UserMasterClass";
+import Clock from '@/components/contlloer/Clock.vue'
+import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
+
 interface IFAttendanceTime
 {
     ID: number,
@@ -54,10 +55,9 @@ export default defineComponent({
         let Nowtime = '';
         const value: string = DateTimeStore.DATETIME2
         let data: AttendanceTime = new AttendanceTime();
-        const UserMaster: UserMasterStore = new UserMasterStore();
-        console.log(UserMaster.ValUserMaster.value)
         let id = ref(0);
         let ID = 0;
+        const UserMaster = new UserMasterClass();
         const ClickAttendance = () => {
             let data_: IFAttendanceTime| undefined = data.value.find(x => x.Commutingtime !='' && x.Leavingtime == '');
             if (typeof(data_) == 'undefined')

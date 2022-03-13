@@ -1,21 +1,17 @@
 export class UserClass
 {
-    private ID: number
+    private ID: number;
     private Name: string;
+    private CreateDateTime: Date;
+    private UpdateDateTime: Date;
 
-    constructor(id: number, name: string)
+
+    constructor(resData: any)
     {
-        this.Name = name;
-        this.ID = id;
+        this.ID = resData.ID;
+        this.Name = resData.Name;
+        this.CreateDateTime = resData.CreateDateTime;
+        this.UpdateDateTime = resData.UpdateDateTime;
     }
 
-    get id(): number
-    {
-        return this.ID;
-    }
-
-    get name(): string
-    {
-        return this.Name;
-    }
 }
