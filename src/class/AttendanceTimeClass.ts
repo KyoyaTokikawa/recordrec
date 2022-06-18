@@ -8,7 +8,7 @@ interface json {
 
 export class AttendanceTime
 {
-    private m_ID : number;
+    private m_ID            : number;
     private m_UserId        : number;
     private m_Name          : string;
     private m_Commutingtime : string;

@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import AttendanceList from '@/components/Attendance/AttendanceList.vue';
 import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { UserMasterClass } from "@/class/UserMasterClass";
@@ -38,6 +38,9 @@ import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias
 import RegisterCommutingTime from '@/process/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/UpdatingLeavingTime'
 import {AttendanceTime} from '../class/AttendanceTimeClass';
+import SQLGetAttendanceRecords from '@/sql/query/SQLGetAttendanceRecords'
+import {SQLResult} from '@/sql/query/base/SQLquerybase'
+import Enumerable from "linq";
 
 export class AttendanceTimeList
 {
@@ -55,8 +58,14 @@ export default defineComponent({
         let Nowtime = '';
         const value: string = DateTimeStore.DATETIME2
         let data: AttendanceTimeList = new AttendanceTimeList();
-        
         let Ref = ref(0); // こいつに反応して更新されている。
+        onMounted(() => {
+            result(data).then(res => {
+                data = res
+                Ref.value++;
+            })
+        })
+
         const UserMaster = new UserMasterClass();
         let ID = 1; //  画面から取得
         const ClickAttendance = () => {
@@ -79,9 +88,46 @@ export default defineComponent({
             value,
             changeTime,
             ClickAttendance,
-            ClickLeaving
+            ClickLeaving,
         }
     }
 });
-
+async function result(datas: AttendanceTimeList)
+{
+    const GET = new SQLGetAttendanceRecords();
+    await GET.GET().then((res: any) =>{
+        res.forEach((element: SQLResult[]) => {
+            let id: number = Enumerable.from(element)
+                .where(x => x.colName == 'ID')
+                .select(x => Number(x.value))
+                .first();
+            let userid: number = Enumerable.from(element)
+                .where(x => x.colName == 'UserID')
+                .select(x => Number(x.value))
+                .first();
+            let name: string = Enumerable.from(element)
+                .where(x => x.colName == 'Name')
+                .select(x => x.value)
+                .first();
+            let commutingtime: string = Enumerable.from(element)
+                .where(x => x.colName == 'CommutingDateTime')
+                .select(x => x.value)
+                .first();
+            let leavingtime: string| undefined = Enumerable.from(element)
+                .where(x => x.colName == 'LeavingDateTime')
+                .select(x => x.value)
+                .firstOrDefault();
+            const data:AttendanceTime = new AttendanceTime(
+                id,
+                userid,
+                name,
+                commutingtime ,
+                typeof(leavingtime) != 'undefined' ? leavingtime : ''
+            );
+            datas.value.push(data)
+        });
+        return datas;
+    })
+    return datas;
+}
 </script>

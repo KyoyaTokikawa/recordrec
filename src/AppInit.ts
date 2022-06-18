@@ -6,7 +6,7 @@ export function Init(): void
 {
     const UserMasterAxios: AxiosClass = new AxiosClass("/api/sql/GetUserMaster", null);    
     const UserMaster = new UserMasterClass();
-    UserMasterAxios.GET().then((res:any) =>{
+    UserMasterAxios.GET_().then((res:any) =>{
         const usermaster: UserClass[] = [];
         res.data.forEach((element: any) => {
             const user = new UserClass(element);

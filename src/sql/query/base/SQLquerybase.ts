@@ -5,11 +5,17 @@ interface Json
     sql:string
 }
 
+export interface SQLResult
+{
+    colName: string;
+    value: string;
+}
+
 export default class SQLquerybase
 {
     private json: Json;
     constructor(
-        sql:string
+        sql:string,
     )
     {
        this.json = { sql:sql }
@@ -19,5 +25,11 @@ export default class SQLquerybase
     {
         const post = new AxiosClass('/api/sql', this.json);
         post.POST();
+    }
+
+    public async GET(): Promise<SQLResult[]>
+    {
+        const GET = new AxiosClass('/api/sql', this.json);
+        return await GET.GET();
     }
 }
