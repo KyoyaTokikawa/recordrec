@@ -7,13 +7,15 @@ export class AxiosClass
     API:string;
     constructor(api:string, Json: any)
     {
-        this.Json = Json;
         this.API = api;
+        this.Json = Json;
     }
 
     POST(): void
     {
-        axios.post(process.env.VUE_APP_API_URL + this.API, this.Json);
+        axios.post(process.env.VUE_APP_API_URL + this.API, this.Json).then(response => {
+            console.log('body:', response.data);  // Yohei Munesada
+        });
     }
 
     GET(): any

@@ -14,7 +14,7 @@
                 </div>
                 <div class="field col" style="margin-bottom: 0px;">
                     <div style="width: 400px; font-size: 400%;">
-                        <!-- <WaveButton :name="'退勤'" @click="ClickLeaving" /> -->
+                        <WaveButton :name="'退勤'" @click="ClickLeaving" />
                     </div>
                 </div>
             </div>
@@ -35,7 +35,8 @@ import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { UserMasterClass } from "@/class/UserMasterClass";
 import Clock from '@/components/contlloer/Clock.vue'
 import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
-import RegisterCommutingTime from '@/process/RegisterAttendance'
+import RegisterCommutingTime from '@/process/RegisterCommutingTime'
+import UpdatingLeavingTime from '@/process/UpdatingLeavingTime'
 import {AttendanceTime} from '../class/AttendanceTimeClass';
 
 export class AttendanceTimeList
@@ -56,22 +57,17 @@ export default defineComponent({
         let data: AttendanceTimeList = new AttendanceTimeList();
         
         let Ref = ref(0); // こいつに反応して更新されている。
-        let ID = 0;
         const UserMaster = new UserMasterClass();
+        let ID = 1; //  画面から取得
         const ClickAttendance = () => {
-            data.value = RegisterCommutingTime(data.value, ID, 'toki', Nowtime);
-            data.value.reverse();
+            data.value = RegisterCommutingTime(data.value, ID, Nowtime, UserMaster);
             Ref.value++;
         };
 
-        // const ClickLeaving = () => {
-        //     let data_: IFAttendanceTime| undefined = data.value.find(x => x.Leavingtime == '');
-        //     if (typeof(data_) != 'undefined')
-        //     {
-        //         data_.Leavingtime = Nowtime;
-        //         id.value++;
-        //     }
-        // }
+        const ClickLeaving = () => {
+           data.value = UpdatingLeavingTime(data.value, ID, Nowtime);
+           Ref.value++;
+        }
         
         const changeTime = ((time: string) => {
             Nowtime = time;
@@ -83,7 +79,7 @@ export default defineComponent({
             value,
             changeTime,
             ClickAttendance,
-            // ClickLeaving
+            ClickLeaving
         }
     }
 });

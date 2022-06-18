@@ -12,6 +12,6 @@ export function Init(): void
             const user = new UserClass(element);
             usermaster.push(user);
         });
-        UserMaster.UserMaster = usermaster;        
+        UserMaster.UserMaster = usermaster;
     });
 }
