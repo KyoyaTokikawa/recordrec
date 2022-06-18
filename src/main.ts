@@ -2,7 +2,7 @@ import 'primevue/resources/primevue.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import './assets/styles/layout.scss';
-import "primevue/resources/themes/mdc-dark-indigo/theme.css"; // テーマ
+import "primevue/resources/themes/lara-light-indigo/theme.css"; // テーマ
 import "primevue/resources/primevue.min.css"; // ベース
 import "primeicons/primeicons.css"; // アイコン
 

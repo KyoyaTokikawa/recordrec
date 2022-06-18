@@ -8,7 +8,7 @@
         <template #loading>
             Loading data. Please wait.
         </template>
-        <Column field="name" header="Name" style="min-width:12rem">
+        <Column field="name" header="Name" style="width:5rem">
             <template #body="{data}">
                 {{data.Name}}
             </template>
@@ -16,17 +16,17 @@
                 <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column field="commutingtime" header="Commuting Time" style="min-width:12rem">
+        <Column field="commutingtime" header="Commuting Time" style="width:12rem">
             <template #body="{data}">
-                {{data.Commutingtime}}
+                {{data.CommutingTime}}
             </template>
             <template #filter="{filterModel}">
                 <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column field="leavingtime" header="Leaving Time" style="min-width:12rem">
+        <Column field="leavingtime" header="Leaving Time" style="width:12rem">
             <template #body="{data}">
-                {{data.Leavingtime}}
+                {{data.LeavingTime}}
             </template>
             <template #filter="{filterModel}">
                 <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
@@ -38,10 +38,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { AttendanceTime } from "@/views/Main.vue";
+import { AttendanceTimeList } from "@/views/Main.vue";
+
 export default defineComponent({
     props:{
-        datas: AttendanceTime
+        datas:AttendanceTimeList
     }
 });
 
