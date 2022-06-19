@@ -5,6 +5,7 @@ import { StoreClass } from './StoreClass';
 export class DateTimeStore extends StoreClass {
     public static date = "date";
     public static DATETIME2 = "DATETIME2";
+    public static NowDay = "NowDay";
     public static yyyymmddhhmmss = "yyyymmddhhmmss";
     public static Year = "YYYY";
     public static Month = "MM";
@@ -21,6 +22,7 @@ export class DateTimeStore extends StoreClass {
         setInterval(() => {
             this.DispatchChange({ name: DateTimeStore.date,           value: this.GetValue(DateTimeStore.date) } as ClassName);
             this.DispatchChange({ name: DateTimeStore.DATETIME2,      value: this.GetDATETIM2()                } as ClassName);
+            this.DispatchChange({ name: DateTimeStore.NowDay,         value: this.GetNowDay()                  } as ClassName);
             this.DispatchChange({ name: DateTimeStore.yyyymmddhhmmss, value: this.GetHHMMss()                  } as ClassName);
             this.DispatchChange({ name: DateTimeStore.hhmmss,         value: this.GetHHMMss()                  } as ClassName);
             this.DispatchChange({ name: DateTimeStore.hhmm,           value: this.GetHHMM()                    } as ClassName);
@@ -73,6 +75,14 @@ export class DateTimeStore extends StoreClass {
         return Year + '-' + Month + '-' + Day + ' ' + HH + ':' + MM + ':' + SS;
     }
 
+    private GetNowDay(): string
+    {
+        const Year: string = this.GetValue(DateTimeStore.Year);
+        const Month: string = this.GetValue(DateTimeStore.Month);
+        const Day: string = this.GetValue(DateTimeStore.Day);
+        return Year + '-' + Month + '-' + Day;
+    }
+
     get ValDate(): ComputedRef
     {
         return this.GetComputed(DateTimeStore.date);
@@ -80,6 +90,10 @@ export class DateTimeStore extends StoreClass {
     get ValDateTime2(): ComputedRef
     {
         return this.GetComputed(DateTimeStore.DATETIME2);
+    }
+    get ValNowDay(): ComputedRef
+    {
+        return this.GetComputed(DateTimeStore.NowDay);
     }
     get ValHHMMSS(): ComputedRef
     {

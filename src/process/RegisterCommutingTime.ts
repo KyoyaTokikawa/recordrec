@@ -4,14 +4,20 @@ import { UserClass } from '@/class/UserClass';
 import SQLCommutingTime from '@/sql/query/SQLRegisterCommutingTime';
 import RegisterCommutingTimePrm from '@/sql/parameter/RegisterCommutingTimePrm';
 import Enumerable from "linq";
-
+import { AxiosClass } from '@/class/API/AxiosClass';
 export default function RegisterCommutingTime(
     lstdata: AttendanceTime[],
     userID: number,
     nowtime: string,
-    UserMaster: UserMasterClass
+    UserMaster: UserMasterClass,
+    NowDay: string
 ) : AttendanceTime[]
 {
+    console.log(NowDay)
+    const post = new AxiosClass('/api/RegisterCommutingTime', {UserID: 1, nowDay: NowDay, nowtime: nowtime});
+    post.POST();
+    
+    console.log('new')
     const User: UserClass | undefined = Enumerable.from(UserMaster.Usermaster).where(x => x.ID == userID).firstOrDefault();
     console.log(User)
     if (typeof(User) === 'undefined')
