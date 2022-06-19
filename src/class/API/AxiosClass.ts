@@ -14,7 +14,7 @@ export class AxiosClass
     POST(): void
     {
         axios.post(process.env.VUE_APP_API_URL + this.API, this.Json).then(response => {
-            console.log('body:', response.data);  // Yohei Munesada
+            console.log(response);
         });
     }
 

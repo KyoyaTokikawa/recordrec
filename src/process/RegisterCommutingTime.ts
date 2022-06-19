@@ -16,7 +16,10 @@ export default function RegisterCommutingTime(
     console.log(NowDay)
     const post = new AxiosClass('/api/RegisterCommutingTime', {UserID: 1, nowDay: NowDay, nowtime: nowtime});
     post.POST();
-    
+    const get = new AxiosClass('/api/GetToDayUserAttendanceRecord', {UserID: 1, nowDay: NowDay, nowtime: nowtime});
+    get.GET().then(data => {
+        console.log('data' +data)
+    });
     console.log('new')
     const User: UserClass | undefined = Enumerable.from(UserMaster.Usermaster).where(x => x.ID == userID).firstOrDefault();
     console.log(User)
