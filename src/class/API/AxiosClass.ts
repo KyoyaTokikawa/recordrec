@@ -11,9 +11,9 @@ export class AxiosClass
         this.Json = Json;
     }
 
-    POST(): void
+    async POST(): Promise<void>
     {
-        axios.post(process.env.VUE_APP_API_URL + this.API, this.Json).then(response => {
+        await axios.post(process.env.VUE_APP_API_URL + this.API, this.Json).then(response => {
             console.log(response);
         });
     }
@@ -30,7 +30,7 @@ export class AxiosClass
     
     async GET(): Promise<any>
     {
-        return new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             axios.get(
                 process.env.VUE_APP_API_URL + this.API,
                 {

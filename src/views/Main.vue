@@ -69,7 +69,7 @@ export default defineComponent({
         const UserMaster = new UserMasterClass();
         let ID = 1; //  画面から取得
         const ClickAttendance = () => {
-            data.value = RegisterCommutingTime(data.value, ID, Nowtime, UserMaster, '2022-06-19');
+            data.value = RegisterCommutingTime(data.value, ID, Nowtime, '2022-06-21');
             Ref.value++;
         };
 
