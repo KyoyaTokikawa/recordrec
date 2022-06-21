@@ -1,4 +1,4 @@
-import { AxiosClass } from '@/class/API/AxiosClass';
+import { AxiosClass } from '@/class/API/base/AxiosClass';
 
 interface Json 
 {

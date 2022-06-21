@@ -1,5 +1,5 @@
 // マスタの取得とかする処理
-import { AxiosClass } from '@/class/API/AxiosClass'
+import { AxiosClass } from '@/class/API/base/AxiosClass'
 import { UserClass } from './class/UserClass';
 import { UserMasterClass } from './class/UserMasterClass';
 export function Init(): void

@@ -13,8 +13,17 @@ export class AxiosClass
 
     async POST(): Promise<void>
     {
-        await axios.post(process.env.VUE_APP_API_URL + this.API, this.Json).then(response => {
-            console.log(response);
+        console.log(this.Json)
+        await new Promise((resolve, reject) => {
+            axios.post(process.env.VUE_APP_API_URL + this.API, this.Json)
+            .then(response => {
+                console.log(response.status)
+                resolve(response.data);
+            })
+            .catch((error) => {
+                alert(error.response.data)
+                reject(error)
+            });
         });
     }
 
@@ -41,14 +50,17 @@ export class AxiosClass
                     // 成功時に実行
                     // response.dataに実際のデータが入っている
                     const result = response.data;
+                    console.log(response)
                     resolve(result);
                 })
                 .catch(function (error: any) {
                     // エラー時に実行
+                    console.log(error)
                     reject(error);
                 })
-                .then(function () {
+                .then(function (res) {
                     // 常に実行
+                    console.log(res)
                 });
         });
     }
