@@ -2,31 +2,20 @@ import {AttendanceTime} from '../class/AttendanceTimeClass';
 import GetToDayUserAttendanceRecordPrm from '@/class/API/parameter/GetToDayUserAttendanceRecordPrm';
 import APIGetToDayUserAttendanceRecord from '@/class/API/class/APIGetToDayUserAttendanceRecord';
 
-export default function GetTodayAttendanceRecord(    
+export default async function GetTodayAttendanceRecord(    
     nowtime: string,
-    UserID: number[] | null = null
+    UserID: number[] | null = null,
+    str: string
 ) : Promise<AttendanceTime[]>
 {
-    // 登録API
-
-    const GetPrm = new GetToDayUserAttendanceRecordPrm(UserID, nowtime)
+    const GetPrm = new GetToDayUserAttendanceRecordPrm(UserID, nowtime, str)
     const Get = new APIGetToDayUserAttendanceRecord(GetPrm);
-    const lstdata: AttendanceTime[] = [];
-    return new Promise((resolve) => {
+    let lstdata: AttendanceTime[] = [];
+    return await new Promise((resolve) => {
         Get.GET().then((response) => {
             const JSONString = JSON.stringify(response);
             const Json = JSON.parse(JSONString) as AttendanceTime[]
-            console.log(Json)
-            Json.forEach(row => {
-                const record :AttendanceTime = new AttendanceTime(
-                    row.ID,
-                    row.UserID,
-                    row.Name,
-                    row.CommutingTime,
-                    row.LeavingTime
-                )                
-                lstdata.push(record)
-            })
+            lstdata = Json
             resolve(lstdata)
         })
         .catch(error => {

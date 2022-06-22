@@ -14,7 +14,7 @@ export class AxiosClass
     async POST(): Promise<void>
     {
         console.log(this.Json)
-        await new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             axios.post(process.env.VUE_APP_API_URL + this.API, this.Json)
             .then(response => {
                 console.log(response.status)

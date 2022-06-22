@@ -63,19 +63,19 @@ export default defineComponent({
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
-            GetTodayAttendanceRecord(dateTimeClass.ValDateTime2.value).then(res => {
-                data.value = res
+            GetTodayAttendanceRecord(dateTimeClass.ValDateTime2.value, null,'mount').then(res => {
+                data.value = res.reverse()
                 Ref.value++;
             })   
         })
 
         let ID = 1; //  画面から取得
         const ClickAttendance = async () => {
-            console.log(new Date(Nowtime))
-            await RegisterCommutingTime(ID, new Date(Nowtime));
-            GetTodayAttendanceRecord(NowDay, [ID]).then(res => {
-                data.value = res
-                Ref.value++;
+            const start = new Date().getTime()
+            await RegisterCommutingTime(ID, new Date(Nowtime))
+            GetTodayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+                    data.value = res.reverse()
+                    Ref.value++;
             })   
         };
 
