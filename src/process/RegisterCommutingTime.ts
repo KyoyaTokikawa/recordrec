@@ -1,26 +1,40 @@
 import {AttendanceTime} from '../class/AttendanceTimeClass';
-import { AxiosClass } from '@/class/API/base/AxiosClass';
 import RegisterCommutingTimePrm from '@/class/API/parameter/RegisterCommutingTimePrm';
 import APIRegisterCommutingTime from '@/class/API/class/APIRegisterCommutingTime';
+import GetToDayUserAttendanceRecordPrm from '@/class/API/parameter/GetToDayUserAttendanceRecordPrm';
+import APIGetToDayUserAttendanceRecord from '@/class/API/class/APIGetToDayUserAttendanceRecord';
+
 export default function RegisterCommutingTime(
     lstdata: AttendanceTime[],
     userID: number,
     nowtime: Date,
-    NowDay: string
-) : AttendanceTime[]
+) : Promise<AttendanceTime[]>
 {
     // 登録API
     console.log(new Date(nowtime))
-    const prm :RegisterCommutingTimePrm = new RegisterCommutingTimePrm(1, nowtime);
-    const post: APIRegisterCommutingTime = new APIRegisterCommutingTime(prm);
-    post.POST().then(res => {
-        console.log(res)
-        // const get = new AxiosClass('/api/GetToDayUserAttendanceRecord', {UserID: 1, nowDay: NowDay, nowtime: nowtime});
-        // get.GET().then(res => {
-        //     console.log(res)
-        // });
-    });
-    // 
-    
-    return lstdata;
+    const PostPrm:RegisterCommutingTimePrm = new RegisterCommutingTimePrm(1, nowtime);
+    const post: APIRegisterCommutingTime = new APIRegisterCommutingTime(PostPrm);
+    return new Promise((resolve, reject) => {post.POST().then(res => {
+            const GetPrm = new GetToDayUserAttendanceRecordPrm(1, nowtime)
+            const Get = new APIGetToDayUserAttendanceRecord(GetPrm);
+            Get.GET().then((response) => {
+                const JSONString = JSON.stringify(response);
+                const Json = JSON.parse(JSONString) as AttendanceTime[]
+                
+                Json.forEach(row => {
+                    console.log(row)
+                    const record :AttendanceTime = new AttendanceTime(
+                        row.ID,
+                        row.UserID,
+                        row.Name,
+                        row.CommutingTime,
+                        row.LeavingTime
+                    )
+                    console.log(record)
+                    lstdata.push(record)
+                })
+                resolve(lstdata);
+            })
+        });
+    })
 }

@@ -50,7 +50,6 @@ export class AxiosClass
                     // 成功時に実行
                     // response.dataに実際のデータが入っている
                     const result = response.data;
-                    console.log(response)
                     resolve(result);
                 })
                 .catch(function (error: any) {
@@ -60,7 +59,6 @@ export class AxiosClass
                 })
                 .then(function (res) {
                     // 常に実行
-                    console.log(res)
                 });
         });
     }

@@ -10,7 +10,7 @@
         </template>
         <Column field="userid" header="UserId" style="width:10%">
             <template #body="{data}">
-                {{data.UserId}}
+                {{data.UserID}}
             </template>
             <template #filter="{filterModel}">
                 <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>

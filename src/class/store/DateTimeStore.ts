@@ -109,7 +109,7 @@ export class DateTimeStore extends StoreClass {
     }
 }
 
-function GetFillZero(time: string): string
+export function GetFillZero(time: string): string
 {
     let value = time;
     if (time.length < 2)

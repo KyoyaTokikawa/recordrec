@@ -9,7 +9,7 @@ export default function RegisterLeavingTime(
     nowtime: string
 ): AttendanceTime[]
 {
-    const datlst = Enumerable.from(lstdata).where(x => x.UserId === userID && x.LeavingTime === '').toArray();
+    const datlst = Enumerable.from(lstdata).where(x => x.UserID === userID && x.LeavingTime === '').toArray();
     if (datlst.length > 1)
     {
         alert('データが異常です。管理者に連絡してください。')
