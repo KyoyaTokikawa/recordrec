@@ -6,7 +6,6 @@ export default async function RegisterCommutingTime(
     nowtime: Date
 ) : Promise<void>
 {
-    // 登録API
     const PostPrm:RegisterCommutingTimePrm = new RegisterCommutingTimePrm(userID, nowtime);
     const post: APIRegisterCommutingTime = new APIRegisterCommutingTime(PostPrm);
     return await new Promise((resolve, reject) => {

@@ -1,41 +1,16 @@
-import {AttendanceTime} from '../class/AttendanceTimeClass';
-import UpdatingLeavingTimePrm from '@/sql/parameter/UpdatingLeavingTimePrm';
-import SQLUpdatingLeavingTime from '@/sql/query/SQLUpdatingLeavingTime';
-import Enumerable from "linq";
-
-export default function RegisterLeavingTime(
-    lstdata: AttendanceTime[],
+import UpdatingLeavingTimePrm from '@/class/API/parameter/UpdatingLeavingTimePrm';
+import APIUpdatingLeavingTime from '@/class/API/class/APIUpdatingLeavingTime';
+export default async function RegisterLeavingTime(
     userID: number,
-    nowtime: string
-): AttendanceTime[]
+    nowtime: Date
+): Promise<void>
 {
-    const datlst = Enumerable.from(lstdata).where(x => x.UserID === userID && x.LeavingTime === '').toArray();
-    if (datlst.length > 1)
-    {
-        alert('データが異常です。管理者に連絡してください。')
-        return lstdata;
-    }
-    else if (datlst.length == 1)
-    {
-        const data = Enumerable.from(datlst).firstOrDefault();
-        if (typeof(data) != 'undefined')
-        {
-            data.SetLeavingTime = nowtime;
-            const prm = new UpdatingLeavingTimePrm(
-                data.ID,
-                nowtime                
-            );
-            const sql:SQLUpdatingLeavingTime = new SQLUpdatingLeavingTime(
-                prm
-            );
-            sql.POST();
-        }
-
-        return lstdata;
-    }
-    else
-    {
-        alert('出勤処理がされていません。')
-        return lstdata;
-    }
+    const PostPrm:UpdatingLeavingTimePrm = new UpdatingLeavingTimePrm(userID, nowtime);
+    const post: APIUpdatingLeavingTime = new APIUpdatingLeavingTime(PostPrm);
+    console.log('Update')
+    return await new Promise((resolve, reject) => {
+        post.POST().then(res => {
+            resolve(res);
+        });
+    })
 }

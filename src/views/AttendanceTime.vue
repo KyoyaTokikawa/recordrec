@@ -69,9 +69,8 @@ export default defineComponent({
             })   
         })
 
-        let ID = 1; //  画面から取得
+        let ID = 3; //  画面から取得
         const ClickAttendance = async () => {
-            const start = new Date().getTime()
             await RegisterCommutingTime(ID, new Date(Nowtime))
             GetTodayAttendanceRecord(NowDay, [ID], 'update').then(res => {
                     data.value = res.reverse()
@@ -79,9 +78,12 @@ export default defineComponent({
             })   
         };
 
-        const ClickLeaving = () => {
-           data.value = UpdatingLeavingTime(data.value, ID, Nowtime);
-           Ref.value++;
+        const ClickLeaving = async () => {
+            await UpdatingLeavingTime(ID, new Date(Nowtime));
+            GetTodayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+                    data.value = res.reverse()
+                    Ref.value++;
+            })   
         }
         
         const changeTime = ((time: string) => {
