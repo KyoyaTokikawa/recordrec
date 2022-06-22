@@ -38,9 +38,7 @@ import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias
 import RegisterCommutingTime from '@/process/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/UpdatingLeavingTime'
 import {AttendanceTime} from '../class/AttendanceTimeClass';
-import SQLGetAttendanceRecords from '@/sql/query/SQLGetAttendanceRecords'
-import {SQLResult} from '@/sql/query/base/SQLquerybase'
-import Enumerable from "linq";
+import GetTodayAttendanceRecord from '@/process/GetTodayAttendanceRecord'
 
 export class AttendanceTimeList
 {
@@ -48,7 +46,7 @@ export class AttendanceTimeList
 }
 
 export default defineComponent({
-    name: "Main",
+    name: "AttendanceTime",
     components:{
         Clock,
         WaveButton,
@@ -56,24 +54,29 @@ export default defineComponent({
     },
     setup(){
         let Nowtime = '';
+        let NowDay = '';
         const value: string = DateTimeStore.DATETIME2
+
         let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
+
         onMounted(() => {
-            result(data).then(res => {
-                data = res
+            const dateTimeClass = new DateTimeStore();
+            NowDay = dateTimeClass.ValDate.value
+            GetTodayAttendanceRecord(dateTimeClass.ValDateTime2.value).then(res => {
+                data.value = res
                 Ref.value++;
-            })
+            })   
         })
 
-        const UserMaster = new UserMasterClass();
         let ID = 1; //  画面から取得
-        const ClickAttendance = () => {
+        const ClickAttendance = async () => {
             console.log(new Date(Nowtime))
-            RegisterCommutingTime(data.value, ID, new Date(Nowtime)).then(res => {
-                data.value = res;
+            await RegisterCommutingTime(ID, new Date(Nowtime));
+            GetTodayAttendanceRecord(NowDay, [ID]).then(res => {
+                data.value = res
                 Ref.value++;
-            });
+            })   
         };
 
         const ClickLeaving = () => {
@@ -95,42 +98,5 @@ export default defineComponent({
         }
     }
 });
-async function result(datas: AttendanceTimeList)
-{
-    const GET = new SQLGetAttendanceRecords();
-    await GET.GET().then((res: any) =>{
-        res.forEach((element: SQLResult[]) => {
-            let id: number = Enumerable.from(element)
-                .where(x => x.colName == 'ID')
-                .select(x => Number(x.value))
-                .first();
-            let userid: number = Enumerable.from(element)
-                .where(x => x.colName == 'UserID')
-                .select(x => Number(x.value))
-                .first();
-            let name: string = Enumerable.from(element)
-                .where(x => x.colName == 'Name')
-                .select(x => x.value)
-                .first();
-            let commutingtime: string = Enumerable.from(element)
-                .where(x => x.colName == 'CommutingDateTime')
-                .select(x => x.value)
-                .first();
-            let leavingtime: string| undefined = Enumerable.from(element)
-                .where(x => x.colName == 'LeavingDateTime')
-                .select(x => x.value)
-                .firstOrDefault();
-            const data:AttendanceTime = new AttendanceTime(
-                id,
-                userid,
-                name,
-                commutingtime ,
-                typeof(leavingtime) != 'undefined' ? leavingtime : ''
-            );
-            datas.value.push(data)
-        });
-        return datas;
-    })
-    return datas;
-}
+
 </script>

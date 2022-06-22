@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { AttendanceTimeList } from "@/views/Main.vue";
+import { AttendanceTimeList } from "@/views/AttendanceTime.vue";
 
 export default defineComponent({
     props:{
