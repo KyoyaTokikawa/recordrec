@@ -2,7 +2,7 @@ import RegisterCommutingTimePrm from '@/class/API/parameter/RegisterCommutingTim
 import APIRegisterCommutingTime from '@/class/API/class/APIRegisterCommutingTime';
 
 export default async function RegisterCommutingTime(
-    userID: number,
+    userID: string,
     nowtime: Date
 ) : Promise<void>
 {

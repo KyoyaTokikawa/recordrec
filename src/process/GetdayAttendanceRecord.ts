@@ -1,15 +1,15 @@
 import {AttendanceTime} from '../class/AttendanceTimeClass';
-import GetToDayUserAttendanceRecordPrm from '@/class/API/parameter/GetToDayUserAttendanceRecordPrm';
-import APIGetToDayUserAttendanceRecord from '@/class/API/class/APIGetToDayUserAttendanceRecord';
+import GetDayUserAttendanceRecordPrm from '@/class/API/parameter/GetDayUserAttendanceRecordPrm';
+import APIGetDayUserAttendanceRecord from '@/class/API/class/APIGetDayUserAttendanceRecord';
 
 export default async function GetTodayAttendanceRecord(    
     nowtime: string,
-    UserID: number[] | null = null,
+    UserID: string[] | null = null,
     str: string
 ) : Promise<AttendanceTime[]>
 {
-    const GetPrm = new GetToDayUserAttendanceRecordPrm(UserID, nowtime, str)
-    const Get = new APIGetToDayUserAttendanceRecord(GetPrm);
+    const GetPrm = new GetDayUserAttendanceRecordPrm(UserID, nowtime, true, str)
+    const Get = new APIGetDayUserAttendanceRecord(GetPrm);
     let lstdata: AttendanceTime[] = [];
     return await new Promise((resolve) => {
         Get.GET().then((response) => {

@@ -4,6 +4,11 @@ import Home from '../views/Home.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    name: 'AttendanceTime',
+    component: () => import ('../views/AttendanceTime.vue')
+  },
+  {
+    path: '/Home',
     name: 'Home',
     component: Home
   },
@@ -15,11 +20,6 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
-  {
-    path: '/AttendanceTime',
-    name: 'AttendanceTime',
-    component: () => import ('../views/AttendanceTime.vue')
-  }
 ]
 
 const router = createRouter({

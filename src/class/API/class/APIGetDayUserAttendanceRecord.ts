@@ -1,5 +1,5 @@
 import { AxiosClass } from "../base/AxiosClass";
-import GetToDayUserAttendanceRecordPrm from "../parameter/GetToDayUserAttendanceRecordPrm"
+import GetDayUserAttendanceRecordPrm from "../parameter/GetDayUserAttendanceRecordPrm"
 
 export interface ValueType {
     ID : number;
@@ -11,9 +11,9 @@ export interface ValueType {
 
 export default class APIGetToDayUserAttendanceRecord extends AxiosClass
 {
-    private static api= '/api/GetToDayUserAttendanceRecord';
+    private static api= '/api/GetDayUserAttendanceRecord';
 
-    constructor(prm : GetToDayUserAttendanceRecordPrm)
+    constructor(prm : GetDayUserAttendanceRecordPrm)
     {
         super(APIGetToDayUserAttendanceRecord.api, prm.Json)
     }

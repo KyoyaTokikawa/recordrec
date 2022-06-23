@@ -38,7 +38,7 @@ import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias
 import RegisterCommutingTime from '@/process/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/UpdatingLeavingTime'
 import {AttendanceTime} from '../class/AttendanceTimeClass';
-import GetTodayAttendanceRecord from '@/process/GetTodayAttendanceRecord'
+import GetdayAttendanceRecord from '@/process/GetdayAttendanceRecord'
 
 export class AttendanceTimeList
 {
@@ -63,16 +63,16 @@ export default defineComponent({
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
-            GetTodayAttendanceRecord(dateTimeClass.ValDateTime2.value, null,'mount').then(res => {
+            GetdayAttendanceRecord(dateTimeClass.ValDateTime2.value, null,'mount').then(res => {
                 data.value = res.reverse()
                 Ref.value++;
             })   
         })
 
-        let ID = 3; //  画面から取得
+        let ID = 'pegurin1109'; //  画面から取得
         const ClickAttendance = async () => {
             await RegisterCommutingTime(ID, new Date(Nowtime))
-            GetTodayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+            GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
                     data.value = res.reverse()
                     Ref.value++;
             })   
@@ -80,7 +80,7 @@ export default defineComponent({
 
         const ClickLeaving = async () => {
             await UpdatingLeavingTime(ID, new Date(Nowtime));
-            GetTodayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+            GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
                     data.value = res.reverse()
                     Ref.value++;
             })   

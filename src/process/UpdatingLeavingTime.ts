@@ -1,7 +1,7 @@
 import UpdatingLeavingTimePrm from '@/class/API/parameter/UpdatingLeavingTimePrm';
 import APIUpdatingLeavingTime from '@/class/API/class/APIUpdatingLeavingTime';
 export default async function RegisterLeavingTime(
-    userID: number,
+    userID: string,
     nowtime: Date
 ): Promise<void>
 {
