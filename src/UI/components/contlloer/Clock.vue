@@ -1,6 +1,8 @@
 <template>
-<div style="margin-top: 20px; margin-left: -45px; padding: 0px; text-align: center;">
-  {{dateTime}}
+<div>
+  <span>
+    {{ dateTime }}
+  </span>
 </div>
 </template>
 
@@ -19,13 +21,17 @@ export default defineComponent({
   setup(props, context) {
     const dateTimeClass = new DateTimeStore();
     let dateTime: ComputedRef;
-    if (props.KbnDisplayDateTime == DateTimeStore.hhmmss)
+    if (props.KbnDisplayDateTime == DateTimeStore.hhmmssspace)
     {
-      dateTime = dateTimeClass.ValHHMMSS;
+      dateTime = dateTimeClass.ValHHMMSSSpace;
     }
     else if (props.KbnDisplayDateTime == DateTimeStore.hhmm)
     {
       dateTime = dateTimeClass.ValHHMM;
+    }
+    else if (props.KbnDisplayDateTime == DateTimeStore.NowDay)
+    {
+      dateTime = dateTimeClass.ValNowDay;
     }
     else
     {
@@ -61,4 +67,16 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  span {
+    position: relative;
+  }
+  div {
+    height: 50%;
+    padding: 0px;
+    text-align: center;
+    font-size: 500%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

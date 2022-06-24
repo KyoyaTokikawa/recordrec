@@ -15,7 +15,7 @@ export class DateTimeStore extends StoreClass {
     public static Seconds        = "ss";
     public static hhmmss         = "hhmmss";
     public static hhmm           = "hhmm";
-    
+    public static hhmmssspace    = "hhmmssspace";
     constructor()
     {
         super();
@@ -37,6 +37,10 @@ export class DateTimeStore extends StoreClass {
     get ValHHMMSS(): ComputedRef
     {
         return this.GetComputed(DateTimeStore.hhmmss);
+    }
+    get ValHHMMSSSpace(): ComputedRef
+    {
+        return this.GetComputed(DateTimeStore.hhmmssspace);
     }
     get ValHHMM(): ComputedRef
     {

@@ -1,44 +1,50 @@
 <template>
-    <div class="col-1 md:col-12">
+<div class="grid">
+    <div class="col-12 md:col-4">
         <div class="card p-fluid">
             <div class="formgrid grid">
                 <div class="field col" style="margin-bottom: 0px;">
-                    <div style="font-size: 400%; ">
-                        <Clock :KbnValueDateTime="value" @ChangeTime="changeTime" />
-                    </div>
+                <AutoComplete placeholder="Search" :key="Ref2" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="field" @complete="searchCountry($event.query)" field="name"/>
+                {{field}}
                 </div>
-                <div class="field col" style="margin-bottom: 0px;">
-                    <div style="width: 400px; font-size: 400%;">
-                        <WaveButton :name="'出勤'" @click="ClickAttendance()" />
+            </div>
+        </div>
+    </div>
+    <div class="col-12 md:col-8">
+            <div class="card p-fluid">
+                <div class="formgrid grid">
+                      <div class="field col" style="margin-bottom: 0px;">
+                        <Clock :KbnDisplayDateTime="date"  @ChangeTime="changeTime" />
+                        <Clock :KbnDisplayDateTime="clock" @ChangeTime="changeTime" />
                     </div>
-                </div>
-                <div class="field col" style="margin-bottom: 0px;">
-                    <div style="width: 400px; font-size: 400%;">
+                    <div class="field col" style="margin-bottom: 0px;">
+                        <WaveButton :name="'出勤'" @click="ClickAttendance" />
                         <WaveButton :name="'退勤'" @click="ClickLeaving" />
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-1 md:col-12">
-        <div style="width: 100%; font-size: 200%;">
-            <AttendanceList :key="Ref" :datas="data" ref="component" />
+        <div class="col-12 md:col-12">
+            <div style="width: 100%;">
+                <AttendanceList :key="Ref" :datas="data" ref="component" />
+            </div>
         </div>
-    </div>
+</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import AttendanceList from '@/components/Attendance/AttendanceList.vue';
+import { defineComponent, ref, onMounted, computed } from "vue";
+import AttendanceList from '@/UI/components/Attendance/AttendanceList.vue';
 import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { UserMasterClass } from "@/class/UserMasterClass";
-import Clock from '@/components/contlloer/Clock.vue'
-import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
+import Clock from '@/UI/components/contlloer/Clock.vue'
+import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import RegisterCommutingTime from '@/process/Attendance/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/Attendance/UpdatingLeavingTime'
-import {AttendanceTime} from '../class/AttendanceTimeClass';
+import {AttendanceTime} from '@/class/AttendanceTimeClass';
 import GetdayAttendanceRecord from '@/process/Attendance/GetdayAttendanceRecord'
+
+import Enumerable from "linq";
 
 export class AttendanceTimeList
 {
@@ -53,13 +59,19 @@ export default defineComponent({
         AttendanceList,
     },
     setup(){
+        const UserMasterStore : UserMasterClass = new UserMasterClass();
+        const UserMaster = UserMasterStore.UserMaster
         let Nowtime = '';
         let NowDay = '';
-        const value: string = DateTimeStore.DATETIME2
-
+        const clock: string = DateTimeStore.hhmmssspace
+        const date: string = DateTimeStore.NowDay
         let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
 
+        let Ref2 = ref(0);
+        let selectedAutoValue = ''
+        let autoFilteredValue: string[] = []            
+        let autoValue: any = null
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
@@ -67,7 +79,6 @@ export default defineComponent({
                 data.value = res.reverse()
                 Ref.value++;
             })
-            const UserMaster : UserMasterClass = new UserMasterClass()
             console.log(UserMaster)
             // console.log(UserMaster.UserMaster[0])
         })
@@ -92,16 +103,38 @@ export default defineComponent({
         const changeTime = ((time: string) => {
             Nowtime = time;
         })
-
+        const searchCountry = (search: string) => {
+				setTimeout(() => {
+					if (!search.trim().length)
+                    {
+                        console.log(autoFilteredValue)
+                        autoFilteredValue = Enumerable.from(UserMaster).select(x => `${x.UserID}/${x.Name}`).toArray();
+                        console.log(autoFilteredValue)
+                    }
+				}, 250);
+			}
+        const field = computed(() => {
+            selectedAutoValue + 'a'
+            return autoFilteredValue
+        })
         return {
             data,
             Ref,
-            value,
+            Ref2,
+            clock,
+            date,
+            selectedAutoValue,
+            field,
             changeTime,
             ClickAttendance,
             ClickLeaving,
+            searchCountry
         }
     }
 });
 
 </script>
+
+<style>
+
+</style>

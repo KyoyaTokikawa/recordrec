@@ -35,6 +35,9 @@ export default defineComponent({
 
   a {
     padding: 10px 20px;
+    width: 400px;
+    font-size: 400%;
+    margin: 10px;
     position: relative;
     display: block;
     text-decoration: none;

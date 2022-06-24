@@ -15,6 +15,7 @@ export class StoreInit extends StoreClass
             this.DispatchChange({ name: DateTimeStore.NowDay,         value: this.GetNowDay()                  } as ClassName);
             this.DispatchChange({ name: DateTimeStore.yyyymmddhhmmss, value: this.GetHHMMss()                  } as ClassName);
             this.DispatchChange({ name: DateTimeStore.hhmmss,         value: this.GetHHMMss()                  } as ClassName);
+            this.DispatchChange({ name: DateTimeStore.hhmmssspace,    value: this.GetHHMMssSpace()             } as ClassName);
             this.DispatchChange({ name: DateTimeStore.hhmm,           value: this.GetHHMM()                    } as ClassName);
         });
         
@@ -27,6 +28,14 @@ export class StoreInit extends StoreClass
         const SS: string = this.GetValue(DateTimeStore.Seconds);
         return HH + ':' + MM + ':' + SS;
     }
+
+    private GetHHMMssSpace(): string{
+        const HH: string = this.GetValue(DateTimeStore.Hour);
+        const MM: string = this.GetValue(DateTimeStore.Minutes);
+        const SS: string = this.GetValue(DateTimeStore.Seconds);
+        return `${HH} : ${MM} : ${SS}`;
+    }
+
     private GetHHMM(): string{
         const HH: string = this.GetValue(DateTimeStore.Hour);
         const MM: string = this.GetValue(DateTimeStore.Minutes);

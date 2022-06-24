@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" src="../../assets/logo.png">
     <WaveButton :name=dateTime />
   </div>
 		<div class="col-12 md:col-6">
@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
+import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import { DateTimeStore } from '@/class/store/DateTimeStore';
 
 export default defineComponent({
