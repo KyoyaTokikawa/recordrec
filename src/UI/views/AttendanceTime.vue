@@ -75,7 +75,7 @@ export default defineComponent({
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
-            GetdayAttendanceRecord(dateTimeClass.ValDateTime2.value, null,'mount').then(res => {
+            GetdayAttendanceRecord(dateTimeClass.ValDate.value, null,'mount').then(res => {
                 data.value = res.reverse()
                 Ref.value++;
             })
