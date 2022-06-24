@@ -4,8 +4,7 @@
         <div class="card p-fluid">
             <div class="formgrid grid">
                 <div class="field col" style="margin-bottom: 0px;">
-                <AutoComplete placeholder="Search" :key="Ref2" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="field" @complete="searchCountry($event.query)" field="name"/>
-                {{field}}
+                <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="false" v-model="state.selectedAutoValue" :suggestions="state.autoFilteredValue" @complete="searchCountry($event.query)" field="name"/>
                 </div>
             </div>
         </div>
@@ -33,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, ref, onMounted, computed, reactive } from "vue";
 import AttendanceList from '@/UI/components/Attendance/AttendanceList.vue';
 import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { UserMasterClass } from "@/class/UserMasterClass";
@@ -68,10 +67,11 @@ export default defineComponent({
         let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
 
-        let Ref2 = ref(0);
-        let selectedAutoValue = ''
-        let autoFilteredValue: string[] = []            
-        let autoValue: any = null
+        const state = reactive({
+            autoFilteredValue: [],
+            selectedAutoValue: '',
+        })
+
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
@@ -79,11 +79,9 @@ export default defineComponent({
                 data.value = res.reverse()
                 Ref.value++;
             })
-            console.log(UserMaster)
-            // console.log(UserMaster.UserMaster[0])
         })
 
-        let ID = 'penpen'; //  画面から取得
+        let ID = 'pegurin'; //  画面から取得
         const ClickAttendance = async () => {
             await RegisterCommutingTime(ID, new Date(Nowtime))
             GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
@@ -103,28 +101,22 @@ export default defineComponent({
         const changeTime = ((time: string) => {
             Nowtime = time;
         })
+
         const searchCountry = (search: string) => {
-				setTimeout(() => {
-					if (!search.trim().length)
-                    {
-                        console.log(autoFilteredValue)
-                        autoFilteredValue = Enumerable.from(UserMaster).select(x => `${x.UserID}/${x.Name}`).toArray();
-                        console.log(autoFilteredValue)
-                    }
-				}, 250);
-			}
-        const field = computed(() => {
-            selectedAutoValue + 'a'
-            return autoFilteredValue
-        })
+            setTimeout(() => {
+                if (!search.trim().length)
+                {
+                    state.autoFilteredValue = UserMasterStore.UserMasterFileter
+                }
+            }, 250);
+		}
+
         return {
+            state,
             data,
             Ref,
-            Ref2,
             clock,
             date,
-            selectedAutoValue,
-            field,
             changeTime,
             ClickAttendance,
             ClickLeaving,

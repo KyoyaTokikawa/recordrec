@@ -1,5 +1,5 @@
 import { ClassName } from '../../store/index'
-import { IFUserClass } from '../UserClass';
+import { UserClass } from '../UserClass';
 import { StoreClass } from './StoreClass';
 
 export class UserMasterStore extends StoreClass
@@ -10,12 +10,12 @@ export class UserMasterStore extends StoreClass
     {
         super()
     }
-    protected set SetUserMaster(value: IFUserClass[])
+    protected set SetUserMaster(value: UserClass[])
     {
         this.DispatchChange({name: UserMasterStore.ClassName, value: value} as ClassName)
     }
 
-    protected get Vale(): IFUserClass[]
+    protected get Vale(): UserClass[]
     {
         return this.Get(UserMasterStore.ClassName);
     }

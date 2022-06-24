@@ -11,7 +11,7 @@ export interface IFUserClass
     CreateDate : string | null
     UpdateDate : string | null
 }
-export class UserClass
+export class UserClass implements IFUserClass
 {
     private m_ID         : number
     private m_UserID     : string
@@ -59,4 +59,5 @@ export class UserClass
      public get Deleted()    : number | null { return this.m_Deleted }
      public get CreateDate() : string | null { return this.m_CreateDate }
      public get UpdateDate() : string | null { return this.m_UpdateDate }
+     public get fileterValue() : string { return `{"name" : "${this.UserID}", "code" : "${this.UserID}"}`}
 }
