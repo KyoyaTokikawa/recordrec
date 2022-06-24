@@ -1,16 +1,13 @@
 // マスタの取得とかする処理
-import { AxiosClass } from '@/class/API/base/AxiosClass'
-import { UserClass } from './class/UserClass';
-import { UserMasterClass } from './class/UserMasterClass';
 import { DateTimeStore } from './class/store/DateTimeStore';
 import { StoreClass} from '@/class/store/StoreClass'
 import { ClassName } from './store';
+import GetUserMaster from './process/master/GetUserMaster';
 export class StoreInit extends StoreClass
 {
     constructor()
     {
         super()
-        const UserMasterAxios: AxiosClass = new AxiosClass("/api/sql/GetUserMaster", null);
         new DateTimeStore();
         setInterval(() => {
             this.DispatchChange({ name: DateTimeStore.date,           value: this.GetValue(DateTimeStore.date) } as ClassName);
@@ -21,15 +18,7 @@ export class StoreInit extends StoreClass
             this.DispatchChange({ name: DateTimeStore.hhmm,           value: this.GetHHMM()                    } as ClassName);
         });
         
-        const UserMaster = new UserMasterClass();
-        UserMasterAxios.GET_().then((res:any) =>{
-            const usermaster: UserClass[] = [];
-            res.data.forEach((element: any) => {
-                const user = new UserClass(element);
-                usermaster.push(user);
-            });
-            UserMaster.UserMaster = usermaster;
-        });
+        GetUserMaster();
     }
 
     private GetHHMMss(): string{

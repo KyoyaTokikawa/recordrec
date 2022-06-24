@@ -1,6 +1,6 @@
-import {AttendanceTime} from '../class/AttendanceTimeClass';
-import GetDayUserAttendanceRecordPrm from '@/class/API/parameter/GetDayUserAttendanceRecordPrm';
-import APIGetDayUserAttendanceRecord from '@/class/API/class/APIGetDayUserAttendanceRecord';
+import {AttendanceTime} from '../../class/AttendanceTimeClass';
+import GetDayUserAttendanceRecordPrm from '@/class/API/parameter/Attendance/GetDayUserAttendanceRecordPrm';
+import APIGetDayUserAttendanceRecord from '@/class/API/class/Attendance/APIGetDayUserAttendanceRecord';
 
 export default async function GetTodayAttendanceRecord(    
     nowtime: string,

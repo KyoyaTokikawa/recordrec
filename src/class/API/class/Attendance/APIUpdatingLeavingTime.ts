@@ -1,5 +1,5 @@
-import { AxiosClass } from "../base/AxiosClass";
-import UpdatingLeavingTimePrm from "../parameter/UpdatingLeavingTimePrm"
+import { AxiosClass } from "../../base/AxiosClass";
+import UpdatingLeavingTimePrm from "../../parameter/Attendance/UpdatingLeavingTimePrm"
 
 export default class APIUpdatingLeavingTime extends AxiosClass
 {

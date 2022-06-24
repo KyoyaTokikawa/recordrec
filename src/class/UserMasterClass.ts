@@ -1,5 +1,5 @@
 import { UserMasterStore } from "./store/UserMasterStore";
-import { UserClass } from "./UserClass";
+import { UserClass, IFUserClass } from "./UserClass";
 export class UserMasterClass extends UserMasterStore
 {
     constructor()
@@ -7,12 +7,12 @@ export class UserMasterClass extends UserMasterStore
         super()
     }
 
-    public set UserMaster(value: UserClass[])
+    public set UserMaster(value: IFUserClass[])
     {
         this.SetUserMaster = value;
     }
 
-    public get Usermaster(): UserClass[]
+    public get UserMaster(): IFUserClass[]
     {
         return this.Vale;
     }

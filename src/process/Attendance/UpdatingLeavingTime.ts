@@ -1,5 +1,5 @@
-import UpdatingLeavingTimePrm from '@/class/API/parameter/UpdatingLeavingTimePrm';
-import APIUpdatingLeavingTime from '@/class/API/class/APIUpdatingLeavingTime';
+import UpdatingLeavingTimePrm from '@/class/API/parameter/Attendance/UpdatingLeavingTimePrm';
+import APIUpdatingLeavingTime from '@/class/API/class/Attendance/APIUpdatingLeavingTime';
 export default async function RegisterLeavingTime(
     userID: string,
     nowtime: Date

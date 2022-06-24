@@ -1,5 +1,5 @@
-import RegisterCommutingTimePrm from '@/class/API/parameter/RegisterCommutingTimePrm';
-import APIRegisterCommutingTime from '@/class/API/class/APIRegisterCommutingTime';
+import RegisterCommutingTimePrm from '@/class/API/parameter/Attendance/RegisterCommutingTimePrm';
+import APIRegisterCommutingTime from '@/class/API/class/Attendance/APIRegisterCommutingTime';
 
 export default async function RegisterCommutingTime(
     userID: string,

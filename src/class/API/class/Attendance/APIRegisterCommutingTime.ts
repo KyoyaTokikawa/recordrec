@@ -1,5 +1,5 @@
-import { AxiosClass } from "../base/AxiosClass";
-import RegisterCommutingTimePrm from "../parameter/RegisterCommutingTimePrm"
+import { AxiosClass } from "../../base/AxiosClass";
+import RegisterCommutingTimePrm from "../../parameter/Attendance/RegisterCommutingTimePrm"
 
 export default class APIRegisterCommutingTime extends AxiosClass
 {

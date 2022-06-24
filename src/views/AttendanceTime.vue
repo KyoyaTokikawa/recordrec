@@ -35,10 +35,10 @@ import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { UserMasterClass } from "@/class/UserMasterClass";
 import Clock from '@/components/contlloer/Clock.vue'
 import WaveButton from '@/components/contlloer/WaveButton.vue'; // @ is an alias to /src
-import RegisterCommutingTime from '@/process/RegisterCommutingTime'
-import UpdatingLeavingTime from '@/process/UpdatingLeavingTime'
+import RegisterCommutingTime from '@/process/Attendance/RegisterCommutingTime'
+import UpdatingLeavingTime from '@/process/Attendance/UpdatingLeavingTime'
 import {AttendanceTime} from '../class/AttendanceTimeClass';
-import GetdayAttendanceRecord from '@/process/GetdayAttendanceRecord'
+import GetdayAttendanceRecord from '@/process/Attendance/GetdayAttendanceRecord'
 
 export class AttendanceTimeList
 {
@@ -66,10 +66,13 @@ export default defineComponent({
             GetdayAttendanceRecord(dateTimeClass.ValDateTime2.value, null,'mount').then(res => {
                 data.value = res.reverse()
                 Ref.value++;
-            })   
+            })
+            const UserMaster : UserMasterClass = new UserMasterClass()
+            console.log(UserMaster)
+            // console.log(UserMaster.UserMaster[0])
         })
 
-        let ID = 'pegurin1109'; //  画面から取得
+        let ID = 'penpen'; //  画面から取得
         const ClickAttendance = async () => {
             await RegisterCommutingTime(ID, new Date(Nowtime))
             GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
