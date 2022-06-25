@@ -1,6 +1,6 @@
 // マスタの取得とかする処理
-import { DateTimeStore } from './class/store/DateTimeStore';
-import { StoreClass} from '@/class/store/StoreClass'
+import DateTimeStore from './class/store/DateTimeStore';
+import StoreClass from '@/class/store/StoreClass'
 import { ClassName } from './store';
 import GetUserMaster from './process/master/GetUserMaster';
 export class StoreInit extends StoreClass

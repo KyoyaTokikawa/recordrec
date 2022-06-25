@@ -4,7 +4,7 @@
         <div class="card p-fluid">
             <div class="formgrid grid">
                 <div class="field col" style="margin-bottom: 0px;">
-                <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="false" v-model="state.selectedAutoValue" :suggestions="state.autoFilteredValue" @complete="searchCountry($event.query)" field="name"/>
+                    <AutoCompleteSerch :autoFilteredValue='UserMasterFilter' @GetFilter="GetFilter"/>
                 </div>
             </div>
         </div>
@@ -32,18 +32,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed, reactive } from "vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import AttendanceList from '@/UI/components/Attendance/AttendanceList.vue';
-import { DateTimeStore } from '@/class/store/DateTimeStore';
-import { UserMasterClass } from "@/class/UserMasterClass";
+import AutoCompleteSerch from "../components/contlloer/AutoCompleteSerch.vue";
 import Clock from '@/UI/components/contlloer/Clock.vue'
 import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import RegisterCommutingTime from '@/process/Attendance/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/Attendance/UpdatingLeavingTime'
-import {AttendanceTime} from '@/class/AttendanceTimeClass';
 import GetdayAttendanceRecord from '@/process/Attendance/GetdayAttendanceRecord'
-
-import Enumerable from "linq";
+import GetUserMaster from "@/process/master/GetUserMaster";
+import DateTimeStore from '@/class/store/DateTimeStore';
+import UserMasterClass from "@/class/UserMasterClass";
+import { filterClass, filter } from "@/class/API/class/master/interface/IFAutoCompleteFilter";
+import {AttendanceTime} from '@/class/AttendanceTimeClass';
 
 export class AttendanceTimeList
 {
@@ -56,29 +57,32 @@ export default defineComponent({
         Clock,
         WaveButton,
         AttendanceList,
+        AutoCompleteSerch
     },
     setup(){
         const UserMasterStore : UserMasterClass = new UserMasterClass();
-        const UserMaster = UserMasterStore.UserMaster
+        const UserMasterFilter: filterClass = new filterClass();
+
         let Nowtime = '';
         let NowDay = '';
         const clock: string = DateTimeStore.hhmmssspace
         const date: string = DateTimeStore.NowDay
         let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
-
-        const state = reactive({
-            autoFilteredValue: [],
-            selectedAutoValue: '',
-        })
-
+        
         onMounted(() => {
             const dateTimeClass = new DateTimeStore();
             NowDay = dateTimeClass.ValDate.value
             GetdayAttendanceRecord(dateTimeClass.ValDate.value, null,'mount').then(res => {
                 data.value = res.reverse()
                 Ref.value++;
-            })
+            });
+            if (UserMasterStore.UserMaster == null || UserMasterStore.UserMaster.length == 0)
+            {
+                GetUserMaster();
+            }
+            UserMasterFilter.value = UserMasterStore.UserMasterFileter
+            console.log('main mount')
         })
 
         let ID = 'pegurin'; //  画面から取得
@@ -102,25 +106,20 @@ export default defineComponent({
             Nowtime = time;
         })
 
-        const searchCountry = (search: string) => {
-            setTimeout(() => {
-                if (!search.trim().length)
-                {
-                    state.autoFilteredValue = UserMasterStore.UserMasterFileter
-                }
-            }, 250);
-		}
+        const GetFilter = (() => {
+            UserMasterFilter.value = UserMasterStore.UserMasterFileter;
+        })
 
         return {
-            state,
             data,
             Ref,
             clock,
             date,
+            UserMasterFilter,
             changeTime,
             ClickAttendance,
             ClickLeaving,
-            searchCountry
+            GetFilter
         }
     }
 });

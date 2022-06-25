@@ -2,7 +2,7 @@ import { computed, ComputedRef } from 'vue';
 import { Store} from 'vuex'
 import { State, ClassName, useStore } from '../../store/index'
 
-export class StoreClass
+export default class StoreClass
 {
     Store: Store<State>;
 

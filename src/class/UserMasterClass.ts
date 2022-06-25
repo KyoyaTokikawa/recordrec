@@ -1,7 +1,9 @@
 import { UserMasterStore } from "./store/UserMasterStore";
-import { UserClass, IFUserClass } from "./UserClass";
+import { UserClass} from "./UserClass";
+import { filter } from "./API/class/master/interface/IFAutoCompleteFilter";
 import Enumerable from "linq";
-export class UserMasterClass extends UserMasterStore
+
+export default class UserMasterClass extends UserMasterStore
 {
     constructor()
     {
@@ -18,11 +20,11 @@ export class UserMasterClass extends UserMasterStore
         return this.Vale;
     }
 
-    public get UserMasterFileter() : never
+    public get UserMasterFileter() : filter[]
     {
         return Enumerable.from(this.Vale)
-                        .select(x => `{"name" : "${x.UserID}", "code" : "${x.UserID}"}`)
+                        .select(x => `{"name" : "${x.Name} / ${x.UserID}", "code" : "${x.UserID}"}`)
                         .select(x => JSON.parse(x))
-                        .toArray() as never
+                        .toArray()
     }
 }

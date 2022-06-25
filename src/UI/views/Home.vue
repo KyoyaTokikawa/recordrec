@@ -58,7 +58,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
-import { DateTimeStore } from '@/class/store/DateTimeStore';
+import DateTimeStore from '@/class/store/DateTimeStore';
 
 export default defineComponent({
   name: 'Home',

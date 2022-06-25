@@ -1,8 +1,7 @@
 import { ComputedRef } from 'vue';
+import StoreClass from './StoreClass';
 
-import { StoreClass } from './StoreClass';
-
-export class DateTimeStore extends StoreClass {
+export default class DateTimeStore extends StoreClass {
     public static date           = "date";
     public static DATETIME2      = "DATETIME2";
     public static NowDay         = "NowDay";

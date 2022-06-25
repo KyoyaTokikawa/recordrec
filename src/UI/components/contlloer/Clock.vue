@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { DateTimeStore } from '@/class/store/DateTimeStore';
 import { defineComponent, ComputedRef } from 'vue';
+import DateTimeStore from '@/class/store/DateTimeStore';
 
 
 export default defineComponent({

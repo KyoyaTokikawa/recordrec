@@ -1,6 +1,6 @@
 import { ClassName } from '../../store/index'
 import { UserClass } from '../UserClass';
-import { StoreClass } from './StoreClass';
+import StoreClass from './StoreClass';
 
 export class UserMasterStore extends StoreClass
 {
