@@ -7,60 +7,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ComputedRef } from 'vue';
-import DateTimeStore from '@/class/store/DateTimeStore';
+import { defineComponent } from 'vue';
 
 
 export default defineComponent({
   name: 'Clock',
   props:{
-    KbnDisplayDateTime: String,
-    KbnValueDateTime:String
-  },
-  emits: ['ChangeTime'],
-  setup(props, context) {
-    const dateTimeClass = new DateTimeStore();
-    let dateTime: ComputedRef;
-    if (props.KbnDisplayDateTime == DateTimeStore.hhmmssspace)
-    {
-      dateTime = dateTimeClass.ValHHMMSSSpace;
-    }
-    else if (props.KbnDisplayDateTime == DateTimeStore.hhmm)
-    {
-      dateTime = dateTimeClass.ValHHMM;
-    }
-    else if (props.KbnDisplayDateTime == DateTimeStore.NowDay)
-    {
-      dateTime = dateTimeClass.ValNowDay;
-    }
-    else
-    {
-      dateTime = dateTimeClass.ValHHMMSS;
-    }
-    setInterval(() => {
-      if (typeof(props.KbnValueDateTime) != 'undefined')
-      {
-        switch (props.KbnValueDateTime)
-        {
-          case DateTimeStore.DATETIME2:
-            context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
-            break;
-          default:
-            context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
-            break;
-        }
-      }
-      else
-      {
-        context.emit('ChangeTime', dateTimeClass.ValDateTime2.value);
-      }
-      return null;
-      }
-    );
-    
-    return {
-      dateTime,
-    }
+    dateTime: String
   }
 });
 </script>

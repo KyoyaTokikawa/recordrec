@@ -13,8 +13,8 @@
             <div class="card p-fluid">
                 <div class="formgrid grid">
                       <div class="field col" style="margin-bottom: 0px;">
-                        <Clock :KbnDisplayDateTime="date"  @ChangeTime="changeTime" />
-                        <Clock :KbnDisplayDateTime="clock" @ChangeTime="changeTime" />
+                        <Clock :dateTime="state.date" :key="Ref" />
+                        <Clock :dateTime="state.clock" :key="Ref"/>
                     </div>
                     <div class="field col" style="margin-bottom: 0px;">
                         <WaveButton :name="'出勤'" @click="ClickAttendance" />
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, reactive } from "vue";
+import { defineComponent, ref, onMounted, onUpdated, onActivated, onBeforeMount, reactive } from "vue";
 import AttendanceList from '@/UI/components/Attendance/AttendanceList.vue';
 import AutoCompleteSerch from "../components/contlloer/AutoCompleteSerch.vue";
 import Clock from '@/UI/components/contlloer/Clock.vue'
@@ -43,7 +43,7 @@ import GetdayAttendanceRecord from '@/process/Attendance/GetdayAttendanceRecord'
 import GetUserMaster from "@/process/master/GetUserMaster";
 import DateTimeStore from '@/class/store/DateTimeStore';
 import UserMasterClass from "@/class/UserMasterClass";
-import { filterClass, filter } from "@/class/API/class/master/interface/IFAutoCompleteFilter";
+import { filterClass } from "@/class/API/class/master/interface/IFAutoCompleteFilter";
 import {AttendanceTime} from '@/class/AttendanceTimeClass';
 
 export class AttendanceTimeList
@@ -62,21 +62,29 @@ export default defineComponent({
     setup(){
         const UserMasterStore : UserMasterClass = new UserMasterClass();
         const UserMasterFilter: filterClass = new filterClass();
+        const ClsDateTimeStore : DateTimeStore = new DateTimeStore();
 
-        let Nowtime = '';
-        let NowDay = '';
-        const clock: string = DateTimeStore.hhmmssspace
-        const date: string = DateTimeStore.NowDay
+
         let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
-        
+        const state = reactive({
+            Nowtime : '',
+            date    : '',
+            clock   : '',
+        })
         onMounted(() => {
-            const dateTimeClass = new DateTimeStore();
-            NowDay = dateTimeClass.ValDate.value
-            GetdayAttendanceRecord(dateTimeClass.ValDate.value, null,'mount').then(res => {
-                data.value = res.reverse()
-                Ref.value++;
+            setInterval(() => {
+                state.Nowtime = ClsDateTimeStore.ValDateTime2.value
+                state.date = ClsDateTimeStore.ValNowDay.value
+                state.clock = ClsDateTimeStore.ValHHMMSS.value
             });
+            const func = () => {
+                GetdayAttendanceRecord(state.Nowtime, null,'mount').then(res => {
+                    data.value = res.reverse()
+                    Ref.value++;
+                });                
+            };
+            func()
             if (UserMasterStore.UserMaster == null || UserMasterStore.UserMaster.length == 0)
             {
                 GetUserMaster();
@@ -85,26 +93,25 @@ export default defineComponent({
             console.log('main mount')
         })
 
+        
+
         let ID = 'pegurin'; //  画面から取得
         const ClickAttendance = async () => {
-            await RegisterCommutingTime(ID, new Date(Nowtime))
-            GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+            await RegisterCommutingTime(ID, new Date(state.Nowtime))
+            GetdayAttendanceRecord(state.Nowtime, [ID], 'update').then(res => {
                     data.value = res.reverse()
                     Ref.value++;
             })   
         };
 
         const ClickLeaving = async () => {
-            await UpdatingLeavingTime(ID, new Date(Nowtime));
-            GetdayAttendanceRecord(NowDay, [ID], 'update').then(res => {
+            await UpdatingLeavingTime(ID, new Date(state.Nowtime));
+            GetdayAttendanceRecord(state.Nowtime, [ID], 'update').then(res => {
                     data.value = res.reverse()
                     Ref.value++;
             })   
         }
-        
-        const changeTime = ((time: string) => {
-            Nowtime = time;
-        })
+    
 
         const GetFilter = (() => {
             UserMasterFilter.value = UserMasterStore.UserMasterFileter;
@@ -113,10 +120,8 @@ export default defineComponent({
         return {
             data,
             Ref,
-            clock,
-            date,
+            state,
             UserMasterFilter,
-            changeTime,
             ClickAttendance,
             ClickLeaving,
             GetFilter

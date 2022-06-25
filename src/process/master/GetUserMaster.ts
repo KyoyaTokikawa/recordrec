@@ -1,6 +1,6 @@
 import APIGetUserMaster from "@/class/API/class/master/APIGetUserMaster";
 import GetUserMasterPrm from "@/class/API/parameter/master/GetUserMasterPrm";
-import { UserClass, IFUserClass } from "@/class/UserClass";
+import { UserClass } from "@/class/UserClass";
 import UserMasterClass from "@/class/UserMasterClass";
 
 export default async function GetUserMaster(    
