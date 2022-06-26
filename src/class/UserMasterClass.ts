@@ -23,7 +23,7 @@ export default class UserMasterClass extends UserMasterStore
     public get UserMasterFileter() : filter[]
     {
         return Enumerable.from(this.Vale)
-                        .select(x => `{"name" : "${x.Name} / ${x.UserID}", "code" : "${x.UserID}"}`)
+                        .select(x => `{"name" : "${x.UserID} / ${x.Name}", "code" : "${x.UserID}"}`)
                         .select(x => JSON.parse(x))
                         .toArray()
     }
