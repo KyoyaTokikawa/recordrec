@@ -1,23 +1,49 @@
 <template>
-    <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="false"
+    <AutoComplete ref="componentRef" :placeholder="placeholder" id="dd" :dropdown="true" :multiple="false"
         v-model="state.selectedAutoValue" :suggestions="state.autoFilteredValue"
         @complete="searchUser($event.query)"
         field="name"
     />
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue"
+import { defineComponent, reactive, ref } from "vue"
 import { filterClass, filter } from "@/class/API/class/master/interface/IFAutoCompleteFilter" 
+import AutoComplete from "primevue/autocomplete"
 export default defineComponent({
     name: 'AutoCompleteSearch',
+    components:{AutoComplete},
     props:{
-        autoFilteredValue: filterClass
+        autoFilteredValue: filterClass,
+        placeholder: String
     },
     emits: ['GetFilter'],
     setup(props, context) {
         const state = reactive({
             autoFilteredValue: [] as filter[],
             selectedAutoValue: '' as string,
+            inputvalue: '' as string
+        })
+
+        const componentRef = ref<HTMLElement>()
+        const name = (() => {
+            const value = state.selectedAutoValue as unknown as filter // 正直この書き方は微妙だけど、共通と思って諦める
+            return value.name
+        })
+
+        const code = (() => {
+            const value = state.selectedAutoValue as unknown as filter // 正直この書き方は微妙だけど、共通と思って諦める
+            return value.code
+        })
+        
+        const inputValue = (() => {
+            return state.inputvalue
+        })
+
+        const Clear = (() => {
+            state.selectedAutoValue = ''
+        })
+        const Componentfocus = (() => {
+            componentRef.value?.focus()
         })
 
         const searchUser = (search: string) => {
@@ -28,7 +54,7 @@ export default defineComponent({
                     {
                         context.emit('GetFilter')
                     }
-                    if (!search.trim().length && state.autoFilteredValue.length == 0)
+                    if (!search.trim().length && state.autoFilteredValue.length == 0/* この条件がないと二回目が表示されない */)
                     {
                         state.autoFilteredValue = props.autoFilteredValue.value
                     }
@@ -45,10 +71,17 @@ export default defineComponent({
                     }
                 }
             }, 250);
+            state.inputvalue = search;
 		}
         return {
             state,
-            searchUser
+            componentRef,
+            searchUser,
+            name,
+            code,
+            inputValue,
+            Componentfocus,
+            Clear
         }
     }
 })
