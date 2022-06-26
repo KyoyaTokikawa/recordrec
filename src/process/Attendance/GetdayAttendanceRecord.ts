@@ -10,16 +10,11 @@ export default async function GetTodayAttendanceRecord(
 {
     const GetPrm = new GetDayUserAttendanceRecordPrm(UserID, nowtime, true, str)
     const Get = new APIGetDayUserAttendanceRecord(GetPrm);
-    let lstdata: AttendanceTime[] = [];
+    console.log('exec')
+    console.log(nowtime)
     return await new Promise((resolve) => {
-        Get.GET().then((response) => {
-            const JSONString = JSON.stringify(response);
-            const Json = JSON.parse(JSONString) as AttendanceTime[]
-            lstdata = Json
-            resolve(lstdata)
-        })
-        .catch(error => {
-            console.log(error)
+        Get.GET<AttendanceTime[]>().then((response: AttendanceTime[]) => {
+            resolve(response)
         })
     }) 
 }

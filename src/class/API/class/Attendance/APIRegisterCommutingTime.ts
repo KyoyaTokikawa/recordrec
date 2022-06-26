@@ -1,7 +1,7 @@
 import { AxiosClass } from "../../base/AxiosClass";
-import RegisterCommutingTimePrm from "../../parameter/Attendance/RegisterCommutingTimePrm"
+import RegisterCommutingTimePrm, { CommutingTimePrm } from "../../parameter/Attendance/RegisterCommutingTimePrm"
 
-export default class APIRegisterCommutingTime extends AxiosClass
+export default class APIRegisterCommutingTime extends AxiosClass<CommutingTimePrm>
 {
     private static api= '/api/RegisterCommutingTime';
 

@@ -11,6 +11,9 @@ export default async function RegisterCommutingTime(
     return await new Promise((resolve, reject) => {
         post.POST().then(res => {
             resolve(res);
+        })
+        .catch(error => {
+            reject(error)
         });
     })
 }

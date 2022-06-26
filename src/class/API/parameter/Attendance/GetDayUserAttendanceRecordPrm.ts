@@ -1,4 +1,4 @@
-interface Json
+export interface IFGetDayUserAttendanceRecordPrm
 {
     UserID: string[] | null
     ToDay: string
@@ -26,8 +26,9 @@ export default class GetDayUserAttendanceRecordPrm
 
     public get UserID(): string[] | null{ return this.m_UserID;}
     public get ToDay(): string{ return this.m_ToDay;}
-
-    public get Json(): Json{
+    public get reload() : boolean {return this.m_reload}
+    public get proc(): string {return this.m_proc}
+    public get Json(): IFGetDayUserAttendanceRecordPrm{
         return {
             UserID : this.m_UserID,
             ToDay: this.m_ToDay,

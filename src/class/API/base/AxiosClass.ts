@@ -1,11 +1,11 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-export class AxiosClass
+export class AxiosClass<T>
 {
-    Json: any;
+    Json: T;
     API:string;
-    constructor(api:string, Json: any)
+    constructor(api:string, Json: T)
     {
         this.API = api;
         this.Json = Json;
@@ -17,7 +17,7 @@ export class AxiosClass
         return await new Promise((resolve, reject) => {
             axios.post(process.env.VUE_APP_API_URL + this.API, this.Json)
             .then(response => {
-                console.log(response.status)
+                console.log(response.data)
                 resolve(response.data);
             })
             .catch((error) => {
@@ -26,18 +26,8 @@ export class AxiosClass
             });
         });
     }
-
-    GET_(): any
-    {
-        return axios.get(
-            process.env.VUE_APP_API_URL + this.API,
-            {
-                params: this.Json
-            }
-            );
-    }
     
-    async GET(): Promise<any>
+    async GET<T>(): Promise<T>
     {
         return await new Promise((resolve, reject) => {
             axios.get(
@@ -46,19 +36,14 @@ export class AxiosClass
                     params: this.Json
                 }
                 )
-                .then(function (response: any) {
+                .then((response) => {
                     // 成功時に実行
                     // response.dataに実際のデータが入っている
-                    const result = response.data;
-                    resolve(result);
-                })
-                .catch(function (error: any) {
-                    // エラー時に実行
-                    console.log(error)
-                    reject(error);
-                })
-                .then(function (res) {
-                    // 常に実行
+                    const JSONString = JSON.stringify(response.data);
+                    const Json = JSON.parse(JSONString) as T
+                    resolve(Json);
+                }).catch(error => {
+                    reject(error)
                 });
         });
     }

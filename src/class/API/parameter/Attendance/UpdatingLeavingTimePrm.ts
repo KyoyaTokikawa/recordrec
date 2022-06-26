@@ -1,4 +1,4 @@
-interface Json{
+export interface IFUpdatingLeavingTimePrm{
     UserID              : string,
     RegisterLeavingTime : Date
 }
@@ -17,7 +17,7 @@ export default class UpdatingLeavingTimePrm
 
     public get Id()          : string { return this.m_UserID;}
     public get LeavingTime() : Date   { return this.m_LeavingTime;}
-    public get Json()        : Json   {
+    public get Json()        : IFUpdatingLeavingTimePrm   {
         return { UserID: this.m_UserID, RegisterLeavingTime: this.m_LeavingTime}
     }
 }

@@ -1,7 +1,7 @@
 import { AxiosClass } from "../../base/AxiosClass";
-import GetDayUserAttendanceRecordPrm from "../../parameter/Attendance/GetDayUserAttendanceRecordPrm"
+import GetDayUserAttendanceRecordPrm, {IFGetDayUserAttendanceRecordPrm} from "../../parameter/Attendance/GetDayUserAttendanceRecordPrm"
 
-export default class APIGetToDayUserAttendanceRecord extends AxiosClass
+export default class APIGetToDayUserAttendanceRecord extends AxiosClass<IFGetDayUserAttendanceRecordPrm>
 {
     private static api= '/api/GetDayUserAttendanceRecord';
 

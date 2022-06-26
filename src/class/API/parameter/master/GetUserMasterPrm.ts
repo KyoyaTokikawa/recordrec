@@ -1,4 +1,4 @@
-interface Json{
+export interface IFGetUserMasterPrm{
     UserID : string[] | null
 }
 export default class GetUserMasterPrm
@@ -12,7 +12,7 @@ export default class GetUserMasterPrm
     }
 
     public get UserID() : string[] | null { return this.m_UserID;}
-    public get Json()   : Json   {
+    public get Json()   : IFGetUserMasterPrm   {
         return { UserID: this.m_UserID}
     }
 }

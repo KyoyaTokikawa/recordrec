@@ -1,7 +1,7 @@
 import { AxiosClass } from "../../base/AxiosClass";
-import UpdatingLeavingTimePrm from "../../parameter/Attendance/UpdatingLeavingTimePrm"
+import UpdatingLeavingTimePrm, {IFUpdatingLeavingTimePrm} from "../../parameter/Attendance/UpdatingLeavingTimePrm"
 
-export default class APIUpdatingLeavingTime extends AxiosClass
+export default class APIUpdatingLeavingTime extends AxiosClass<IFUpdatingLeavingTimePrm>
 {
     private static api= '/api/UpdatingLeavingTime';
 

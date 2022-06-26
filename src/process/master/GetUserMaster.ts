@@ -11,10 +11,8 @@ export default async function GetUserMaster(
     const Get = new APIGetUserMaster(GetPrm);
     const UserMaster: UserMasterClass = new UserMasterClass();
     return await new Promise((resolve) => {
-        Get.GET().then((response) => {
-            const JSONString = JSON.stringify(response);
-            const Json = JSON.parse(JSONString) as UserClass[]
-            UserMaster.UserMaster = Json
+        Get.GET<UserClass[]>().then((response : UserClass[]) => {
+            UserMaster.UserMaster = response
             resolve(UserMaster.UserMaster)
         })
         .catch(error => {
