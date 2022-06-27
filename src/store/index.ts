@@ -6,9 +6,9 @@ export interface ClassValue {
     [name: string] : any
 }
 
-export interface ClassName {
+export interface ClassName<T> {
     name: string,
-    value: any
+    value: T
 }
 
 // ストアの型定義
@@ -53,15 +53,6 @@ export function GetLabelnameValue(labelname: string): WritableComputedRef<number
       });
 } 
 
-export function SetLabelNameValue(labelname: string, value: any): WritableComputedRef<number>
-{
-    const store = useStore();
-    store.dispatch('change', { name:labelname, value:value } as ClassValue);
-    return computed({
-        get: () => store.state.value[labelname],
-        set: (value) => store.dispatch('change', { name:labelname, value:value } as ClassValue)
-      });
-}
 // 独自のuseStoreメソッド
 export function useStore(): Store<State>{
     // InjectionKeyをuseStoreメソッドに渡す

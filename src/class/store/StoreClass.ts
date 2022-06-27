@@ -21,7 +21,7 @@ export default class StoreClass
         return this.Store.getters.getValue(label);
     }
 
-    protected DispatchChange(value: ClassName): void
+    protected DispatchChange<T>(value: ClassName<T>): void
     {
         this.Store.dispatch('change', value);
     }

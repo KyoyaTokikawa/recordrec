@@ -20,13 +20,13 @@ export class StoreInit extends StoreClass
 
     private DispatchEntry()
     {
-        this.DispatchChange({ name: DateTimeStore.date,           value: this.GetValue(DateTimeStore.date) } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.DATETIME2,      value: this.GetDATETIM2()                } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.NowDay,         value: this.GetNowDay()                  } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.yyyymmddhhmmss, value: this.GetHHMMss()                  } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.hhmmss,         value: this.GetHHMMss()                  } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.hhmmssspace,    value: this.GetHHMMssSpace()             } as ClassName);
-        this.DispatchChange({ name: DateTimeStore.hhmm,           value: this.GetHHMM()                    } as ClassName);
+        this.DispatchChange({ name: DateTimeStore.date,           value: this.GetValue(DateTimeStore.date) } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.DATETIME2,      value: this.GetDATETIM2()                } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.NowDay,         value: this.GetNowDay()                  } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.yyyymmddhhmmss, value: this.GetHHMMss()                  } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.hhmmss,         value: this.GetHHMMss()                  } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.hhmmssspace,    value: this.GetHHMMssSpace()             } as ClassName<string>);
+        this.DispatchChange({ name: DateTimeStore.hhmm,           value: this.GetHHMM()                    } as ClassName<string>);
     }
 
     private GetHHMMss(): string{

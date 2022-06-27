@@ -12,7 +12,7 @@ export class UserMasterStore extends StoreClass
     }
     protected set SetUserMaster(value: UserClass[])
     {
-        this.DispatchChange({name: UserMasterStore.ClassName, value: value} as ClassName)
+        this.DispatchChange({name: UserMasterStore.ClassName, value: value} as ClassName<UserClass[]>)
     }
 
     protected get Vale(): UserClass[]
