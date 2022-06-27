@@ -2,6 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../../assets/logo.png">
     <WaveButton :name=dateTime />
+	<InputYearMonthDateVue></InputYearMonthDateVue>
   </div>
 		<div class="col-12 md:col-6">
 			<div class="card p-fluid">
@@ -59,11 +60,12 @@
 import { defineComponent } from 'vue';
 import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
 import DateTimeStore from '@/class/store/DateTimeStore';
-
+import InputYearMonthDateVue from '../components/contlloer/InputYearMonthDate.vue';
 export default defineComponent({
   name: 'Home',
   components: {
     WaveButton,
+	InputYearMonthDateVue
   },
   setup(){
 	const dateTimeClass: DateTimeStore = new DateTimeStore();
