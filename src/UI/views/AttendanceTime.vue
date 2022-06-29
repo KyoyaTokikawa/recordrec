@@ -64,18 +64,22 @@ export default defineComponent({
         AutoCompleteSerch
     },
     setup(){
+        const label = 'Input UserID or Select UserID/Name'
+
         const UserMasterStore  : UserMasterClass = new UserMasterClass();
         const UserMasterFilter : filterClass     = new filterClass();
         const ClsDateTimeStore : DateTimeStore   = new DateTimeStore();
 
-        let data: AttendanceTimeList = new AttendanceTimeList();
+
         const AutoCompleteSerchRef = ref<InstanceType<typeof AutoCompleteSerch>>()
+        let data: AttendanceTimeList = new AttendanceTimeList();
         let Ref = ref(0); // こいつに反応して更新されている。
         const state = reactive({
             Nowtime : '',
             date    : '',
             clock   : '',
         })
+        
         onMounted(() => {
             setInterval(() => {
                 state.Nowtime = ClsDateTimeStore.ValDateTime2.value
@@ -102,11 +106,10 @@ export default defineComponent({
             console.log('main mount')
         })
 
-        let ID = 'pegurin'; //  画面から取得
+        let ID = ''; //  画面から取得
         const ClickAttendance = async () => {
             if (!AutoCompleteSerchRef.value) return
-            ID = AutoCompleteSerchRef.value.code()
-            if (!ID) ID = AutoCompleteSerchRef.value.inputValue()
+            ID = AutoCompleteSerchRef.value.InputValueOrCode()
             console.log(ID)
             await RegisterCommutingTime(ID, new Date(state.Nowtime))
                 .then(() => AutoCompleteSerchRef.value?.Clear())
@@ -121,8 +124,7 @@ export default defineComponent({
 
         const ClickLeaving = async () => {
             if (!AutoCompleteSerchRef.value) return
-            ID = AutoCompleteSerchRef.value.code()
-            if (!ID) ID = AutoCompleteSerchRef.value.inputValue()
+            ID = AutoCompleteSerchRef.value.InputValueOrCode()
             await UpdatingLeavingTime(ID, new Date(state.Nowtime))
                 .then(() => AutoCompleteSerchRef.value?.Clear())
                     .catch(() => {
@@ -133,7 +135,7 @@ export default defineComponent({
                     Ref.value++;
             })
         }
-        const label = 'Input UserID or Select UserID/Name'
+
         const GetFilter = (() => {
             UserMasterFilter.value = UserMasterStore.UserMasterFileter;
         })

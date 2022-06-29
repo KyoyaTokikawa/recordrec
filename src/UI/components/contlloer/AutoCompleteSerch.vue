@@ -19,9 +19,9 @@ export default defineComponent({
     emits: ['GetFilter'],
     setup(props, context) {
         const state = reactive({
-            autoFilteredValue: [] as filter[],
-            selectedAutoValue: '' as string,
-            inputvalue: '' as string
+            autoFilteredValue : [] as filter[],
+            selectedAutoValue : '' as string,
+            inputvalue        : '' as string
         })
 
         const componentRef = ref<HTMLElement>()
@@ -37,6 +37,15 @@ export default defineComponent({
         
         const inputValue = (() => {
             return state.inputvalue
+        })
+
+        const InputValueOrCode = (() => {
+            let ID = code()
+            if (!ID)
+            {
+                ID = inputValue()
+            }
+            return ID;
         })
 
         const Clear = (() => {
@@ -80,6 +89,7 @@ export default defineComponent({
             name,
             code,
             inputValue,
+            InputValueOrCode,
             Componentfocus,
             Clear
         }
