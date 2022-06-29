@@ -15,9 +15,9 @@
                 </div>
                 <h6 style="text-align: left;">BirthDay</h6>
                 <div class="field col formgroup-inline" style="width: 100%;">
-                    <InputFloatLabelNumber ref="InputYear"  :Label_Name="Year"  :MaxValue="MaxYear"  :MinValue="MinYear"  :Grouping="Grouping" />
-                    <InputFloatLabelNumber ref="InputMonth" :Label_Name="Month" :MaxValue="MaxMonth" :MinValue="MinMonth" :Grouping="Grouping" />
-                    <InputFloatLabelNumber ref="InputDay"   :Label_Name="Day"   :MaxValue="MaxDay"   :MinValue="MinDay"   :Grouping="Grouping" @FocusEvent="dayfocus"/>
+                    <InputFloatLabelNumber ref="InputYear"  :Label_Name="Year"  :MaxValue="MaxYear"  :MinValue="MinYear"  :Grouping="Grouping" @BlurEvent="CalcMaxDay"/>
+                    <InputFloatLabelNumber ref="InputMonth" :Label_Name="Month" :MaxValue="MaxMonth" :MinValue="MinMonth" :Grouping="Grouping" @BlurEvent="CalcMaxDay"/>
+                    <InputFloatLabelNumber ref="InputDay"   :Label_Name="Day"   :MaxValue="MaxDay"   :MinValue="MinDay"   :Grouping="Grouping" @FocusEvent="CalcMaxDay"/>
                 </div>
             </div>
         </div>
@@ -47,19 +47,21 @@ export default defineComponent({
         const Day        = 'Day';
         const MaxDay     = ref(31);
         const MinDay     = ref(1);
-        const Grouping = false;
-        const YeraEvent = 'InputYearMonth'
-        const InputYear = ref<InstanceType<typeof InputFloatLabelNumber>>()
+        const Grouping   = false;
+        const YeraEvent  = 'InputYearMonth'
+        const InputYear  = ref<InstanceType<typeof InputFloatLabelNumber>>()
         const InputMonth = ref<InstanceType<typeof InputFloatLabelNumber>>()
-        const InputDay = ref<InstanceType<typeof InputFloatLabelNumber>>()
-        const InputEventYear = ((value: Ref<number>) => {
-            InputYear.value?.value
-            console.log(value)
-        })
+        const InputDay   = ref<InstanceType<typeof InputFloatLabelNumber>>()
 
-        const dayfocus = () => {
-            console.log(InputYear.value?.value)
-            console.log(InputMonth.value?.value)
+        const CalcMaxDay = () => {
+            const SelectYear = InputYear.value?.value;
+            const SelectMonth = InputMonth.value?.value
+            console.log(`SelectMonth:${SelectMonth} SelectYear${SelectYear}`)
+            if (SelectYear !=  null && SelectMonth != null )
+            {
+                MaxDay.value = (new Date(SelectYear, SelectMonth, 0)).getDate();
+                console.log(`MAXDAY:${MaxDay.value} Year${SelectYear}`)
+            }
         }
 
         return {
@@ -81,8 +83,7 @@ export default defineComponent({
             InputYear,
             InputMonth,
             InputDay,
-            InputEventYear,
-            dayfocus
+            CalcMaxDay
         }
     }
 })
