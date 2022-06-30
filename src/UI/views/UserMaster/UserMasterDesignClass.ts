@@ -1,7 +1,7 @@
 import { ref } from "vue";
 
 export default class UserMasterDesignClass{
-    public UserID     ='UserID';
+    public UserID     = 'UserID';
     public FirstName  = 'FirstName';
     public FamilyName = 'FamilyName';
     public MiddleName = 'MiddleName';
@@ -18,7 +18,7 @@ export default class UserMasterDesignClass{
     public YeraEvent  = 'InputYearMonth'
     public ButtonLabel_Save = "Save";
     public icon_Save = "pi pi-pencil";
-    public ButtonLabel_Update = "Update";
-    public icon_Update = "pi pi-refresh";
+    public ButtonLabel_Update = "Delete";
+    public icon_Update = "pi pi-times";
 
 }
