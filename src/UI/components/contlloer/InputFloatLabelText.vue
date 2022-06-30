@@ -35,7 +35,5 @@ export default defineComponent({
 
 </script>
 <style lang="scss">
-.field {
-    margin: 0px;
-}
+
 </style>

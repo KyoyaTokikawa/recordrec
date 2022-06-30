@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/UI/views/Home.vue'
 import AttendanceTime from '@/UI/views/AttendanceTime.vue'
-import UserMaster from '@/UI/views/UserMaster.vue'
+import UserMaster from '@/UI/views/UserMaster/UserMaster.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
