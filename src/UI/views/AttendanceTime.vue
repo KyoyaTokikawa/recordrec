@@ -40,7 +40,7 @@ import { defineComponent, ref, onMounted, reactive } from "vue";
 import AttendanceList from '@/UI/components/Attendance/AttendanceList.vue';
 import AutoCompleteSerch from "../components/contlloer/AutoCompleteSerch.vue";
 import Clock from '@/UI/components/contlloer/Clock.vue'
-import WaveButton from '@/UI/components/contlloer/WaveButton.vue'; // @ is an alias to /src
+import WaveButton from '@/UI/components/contlloer/Button/WaveButton.vue'; // @ is an alias to /src
 import RegisterCommutingTime from '@/process/Attendance/RegisterCommutingTime'
 import UpdatingLeavingTime from '@/process/Attendance/UpdatingLeavingTime'
 import GetdayAttendanceRecord from '@/process/Attendance/GetdayAttendanceRecord'

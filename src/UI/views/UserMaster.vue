@@ -5,6 +5,8 @@
             <div class="card">  
                 <div class="field col formgroup-inline" style="width: 100%; margin: 0px;">
                     <InputFloatLabelText :Label_Name="UserID"/>
+                    <LoadButton style="text-align: right;" ref="RefButton_Save" :label="ButtonLabel_Save" :icon="icon_Save" @ClickEvent="ClickEvent_Save"/>
+                    <LoadButton style="text-align: right;" ref="RefButton_Update" :label="ButtonLabel_Update" :icon="icon_Update" @ClickEvent="ClickEvent_Update"/>
                 </div>
                 <h5 style="text-align: left;">UserProfile</h5>
                 <h6 style="text-align: left;">UserName</h6>
@@ -26,12 +28,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, Ref } from "vue";
+import LoadButton from "../components/contlloer/Button/LoadButton.vue";
 import InputFloatLabelNumber from "../components/contlloer/InputFloatLabelNumber.vue";
 import InputFloatLabelText from "../components/contlloer/InputFloatLabelText.vue";
 export default defineComponent({
     components:{
         InputFloatLabelText,
-        InputFloatLabelNumber
+        InputFloatLabelNumber,
+        LoadButton
     },
     setup(){
         const UserID     ='UserID';
@@ -52,6 +56,24 @@ export default defineComponent({
         const InputYear  = ref<InstanceType<typeof InputFloatLabelNumber>>()
         const InputMonth = ref<InstanceType<typeof InputFloatLabelNumber>>()
         const InputDay   = ref<InstanceType<typeof InputFloatLabelNumber>>()
+        const ButtonLabel_Save = "Save";
+        const icon_Save = "pi pi-pencil";
+        const RefButton_Save = ref<InstanceType<typeof LoadButton>>()
+        const RefButton_Update = ref<InstanceType<typeof LoadButton>>()
+        const ButtonLabel_Update = "Update";
+        const icon_Update = "pi pi-refresh";
+
+        const ClickEvent_Save = () => {
+            setTimeout(() => {
+                RefButton_Save.value?.loadstop()
+            }, 3000)
+        }
+
+        const ClickEvent_Update = () => {
+            setTimeout(() => {
+                RefButton_Update.value?.loadstop()
+            }, 3000)
+        }
 
         const CalcMaxDay = () => {
             const SelectYear = InputYear.value?.value;
@@ -83,6 +105,14 @@ export default defineComponent({
             InputYear,
             InputMonth,
             InputDay,
+            RefButton_Save,
+            ButtonLabel_Save,
+            icon_Save,
+            RefButton_Update,
+            ButtonLabel_Update,
+            icon_Update,
+            ClickEvent_Save,
+            ClickEvent_Update,
             CalcMaxDay
         }
     }
