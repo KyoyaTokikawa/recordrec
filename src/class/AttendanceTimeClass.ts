@@ -6,6 +6,11 @@ interface json {
     LeavingTime: string
 }
 
+export class AttendanceTimeList
+{
+    value:AttendanceTime[] = [];
+}
+
 export class AttendanceTime
 {
     private m_ID            : number;

@@ -48,12 +48,7 @@ import GetUserMaster from "@/process/master/GetUserMaster";
 import DateTimeStore from '@/class/store/DateTimeStore';
 import UserMasterClass from "@/class/UserMasterClass";
 import { filterClass } from "@/class/API/class/master/interface/IFAutoCompleteFilter";
-import {AttendanceTime} from '@/class/AttendanceTimeClass';
-
-export class AttendanceTimeList
-{
-    value:AttendanceTime[] = [];
-}
+import {AttendanceTimeList} from '@/class/AttendanceTimeClass';
 
 export default defineComponent({
     name: "AttendanceTime",
@@ -95,7 +90,7 @@ export default defineComponent({
                 GetdayAttendanceRecord(state.Nowtime, null,'mount').then(res => {
                     data.value = res.reverse()
                     Ref.value++;
-                });                
+                });
             };
             func()
             if (UserMasterStore.UserMaster == null || UserMasterStore.UserMaster.length == 0)
